@@ -133,7 +133,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 3. **免构建调试**：设置环境变量即可换表，无需重新编译（改表后重启游戏即可）：
 
    ```
-   DARKLANDS_TRANSLATIONS=D:\path\to\translations.tsv
+   DARKLANDS_TRANSLATIONS=<path-to>\translations.tsv
    ```
 
    字体同理：`DARKLANDS_CHINESE_FONT`，或 `local/paths.json` 的 `chinesefont` 键。
