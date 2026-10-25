@@ -103,6 +103,19 @@ The developer console and the launcher rasterise their fonts with StbTrueTypeSha
 NuGet package), a C# port of Sean Barrett's stb_truetype, which is in the public domain (or under the
 MIT licence, at the user's choice). No source of it is included in this repository.
 
+## WenQuanYi Bitmap Song (Chinese text)
+
+`src/Darklands.Presentation/Resources/ChineseFont.ttf` is WenQuanYi Bitmap Song 12 px, the TTF
+conversion of the v1.0.0-RC1 (Hero) PCF bitmap font made by AmusementClub
+(https://wenq.org/wqy2/index.cgi?BitmapSong,
+https://github.com/AmusementClub/WenQuanYi-Bitmap-Song-TTF). It is embedded in the assembly as
+`Darklands.Presentation.Resources.ChineseFont.ttf` and is the face the Chinese text path rasterises
+with StbTrueTypeSharp; it can be replaced at run time with `DARKLANDS_CHINESE_FONT` or the
+`chinesefont` key of `local/paths.json`. Copyright (C) 2004-2010 The WenQuanYi Project Board of
+Trustees and Qianqian Fang, based on firefly's bitmap font; licensed GNU General Public License v2
+with a font embedding exception. The full licence text is in
+`src/Darklands.Presentation/Resources/WenQuanYi-LICENSE.txt`.
+
 ## Original game data
 
 The game's data files (DARKLAND.EXE and its data, MicroProse 1992) are not included; the player

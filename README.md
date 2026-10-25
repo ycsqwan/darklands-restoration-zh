@@ -96,6 +96,121 @@ This covers the project's own code only. *Darklands* itself (© 1992 MicroProse)
 not licensed by it; you need your own copy of the game. Third-party components keep their own licences
 (see `THIRD_PARTY_NOTICES.md`).
 
+## 中文化（Simplified Chinese）
+
+本 fork 在 Restoration Project 之上加入**简体中文**。上游没有国际化支持，也没有 mod / 插件接口，
+所以 CJK 渲染路径是**源码树的一部分**，而不是外挂的插件。
+
+> ⚠️ **实验性构建（experimental）**：文本覆盖率 **100%**（按出现次数），但**全部为机器翻译，
+> 未经人工审校**；卡片换行、选项列表、谜题旋钮、`$he/$his` 代词替换等**尚未实测**。
+> 欢迎试用与反馈，但请勿视作成品。详见[已知问题](#已知问题)。
+
+---
+
+### 现状
+
+| 项目 | 状态 |
+| --- | --- |
+| 覆盖的文本 | 卡片文本的全部可打印 run（7,729 条） |
+| 唯一 run | 7,729 条，已译 **7,731 条（100%）** |
+| 覆盖率 | **100.00%**（按出现次数 13,703 / 13,703） |
+| 表文件 | `translations_zh.tsv`，7,738 行 / 1,701,097 字节 |
+| 字体 | 文泉驿点阵宋体 **12px**（WenQuanYi Bitmap Song） |
+| 渲染方式 | StbTrueTypeSharp → 320×200 索引画布（二值，无 alpha 混合） |
+| 覆盖的 UI | 卡片窗口、侧窗、屏幕页、队伍面板、菜单栏 |
+| 未验证 | 选项列表、谜题旋钮、代词替换 |
+| 未翻译 | 图片内嵌文字（需 HD 包）、代码内硬编码字符串 853 条 |
+
+---
+
+### 安装
+
+需要本 fork 的构建产物（`DarklandsRP.exe`）加你自己拥有的 *Darklands* 游戏数据（例如 GOG 版）。
+**仓库不含任何原版游戏文件。**
+
+1. 按[构建](#构建)一节编译本 fork。
+2. 启动 `DarklandsRP.exe`，指向你的游戏目录。
+3. **免构建调试**：设置环境变量即可换表，无需重新编译（改表后重启游戏即可）：
+
+   ```
+   DARKLANDS_TRANSLATIONS=D:\path\to\translations.tsv
+   ```
+
+   字体同理：`DARKLANDS_CHINESE_FONT`，或 `local/paths.json` 的 `chinesefont` 键。
+
+---
+
+### 构建
+
+```
+dotnet build src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release
+```
+
+需要 .NET 10 SDK。中文路径不引入额外依赖（`StbTrueTypeSharp` 是上游已有的 NuGet 包）。
+
+---
+
+### 工作原理
+
+* **接管点**：`TextDecoder.Decode` 与 `TextPainter`。ASCII（`< 0x80`）继续走原版位图字体，
+  保持原版观感；`≥ 0x80` 且超出 Latin-1 的字符交给 `CjkFont`。
+* **翻译粒度**：卡片文本中连续的 `0x20–0x7F` 字节段（称为一个 run）作为查表 key。
+  控制码（`0x01–0x1F`）与颜色码（`0x80–0xFF`）是分隔符，**永不翻译**。
+* **表加载顺序**：`DARKLANDS_TRANSLATIONS` 环境变量 → `local/paths.json` 的 `translations` 键 →
+  程序集内嵌资源。
+* **卡片文本**在 `TextVariables.Expand` **之前**翻译（`CardScreen.cs:232`），
+  因此译文里的 `$PlaceName`、`$Number1` 等占位符仍会被游戏替换。
+* **字形**：`CjkFont` 用 StbTrueTypeSharp 一次性栅格化并按码位缓存。文泉驿点阵宋体是像素网格字体
+  （`unitsPerEm = ascent − descent = 1500`），必须按 **em = 15px** 栅格化，否则覆盖度不再是二值，
+  阈值会吃掉笔画。
+* **画布**是索引色的、没有 alpha 混合，所以 coverage 在 128 处二值化 —— 中文只能纯色、不能抗锯齿；
+  但位图来源的字形因此保持锐利，不发灰。
+
+---
+
+### 已知问题
+
+1. **未经人工审校**（最主要）。7,731 条全部为 Qwen-MT 机器翻译，术语、文风、代词一致性均未校。
+2. **图片内嵌文字未翻译**。卡片框是 4 张固定位置图片拼成的，图上的文字需要 HD 包（路线 C），
+   本 fork 未实现。
+3. **代码内硬编码字符串未翻译**（853 条 / 4,309 词）。
+4. **选项列表、谜题旋钮、`$he/$his` 代词替换尚未实测**。
+5. **卡片容量**：可用高度 194px，中文容量约 18 列 × 13 行 = 234 字/屏。
+   3,756 张卡中仅 15 张（0.4%）超 194px，且原版自己就溢出。
+
+---
+
+### 许可证
+
+本 fork 是 [Arkana-Mechanika-Studios/darklands-restoration](https://github.com/Arkana-Mechanika-Studios/darklands-restoration)
+的 fork，与其父项目一样以 **GPL-3.0-or-later** 发布（见 `LICENSE`）。中文渲染路径的代码
+（`CjkFont.cs`、`TranslationTable.cs`、`TextDecoder.cs`、`TextPainter.cs` 等）与译文表
+`translations_zh.tsv` 同属该许可范围。
+
+随附的运行时字体 `ChineseFont.ttf`（文泉驿点阵宋体 12px）使用
+**GNU GPL v2 + 字体嵌入例外条款**（GPL-2.0 with font embedding exception）：
+
+* **版权**：Copyright (C) 2004-2010 The WenQuanYi Project Board of Trustees and Qianqian Fang，
+  基于 firefly 的点阵字体作品
+* **完整许可文本与出处**：`src/Darklands.Presentation/Resources/WenQuanYi-LICENSE.txt`
+* **上游**：https://wenq.org/wqy2/index.cgi?BitmapSong
+* 该 TTF 由 AmusementClub 从 v1.0.0-RC1 (Hero) 的 PCF 点阵字体转换而来
+
+字体以托管资源形式内嵌于程序集（`Darklands.Presentation.Resources.ChineseFont.ttf`），但可在运行时
+通过 `DARKLANDS_CHINESE_FONT` 或 `local/paths.json` 的 `chinesefont` 键替换为其他 TTF。
+字体文件本身的 GPL-2.0 + 嵌入例外许可不受影响。
+
+---
+
+### 上游
+
+* [Arkana-Mechanika-Studios/darklands-restoration](https://github.com/Arkana-Mechanika-Studios/darklands-restoration)
+  —— 引擎重制（C#，逐函数对照原版校验）
+* [Arkana Mechanika Labs](https://arkana-mechanika-labs.github.io/) —— 开发日志与研究
+* 原版 *Darklands* © 1992 MicroProse
+
+---
+
 ## Community
 
 News, devlogs and the research behind the restoration: https://arkana-mechanika-labs.github.io/ —

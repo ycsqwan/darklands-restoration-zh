@@ -1,32 +1,34 @@
-文泉驿点阵宋体 (WenQuanYi Bitmap Song) — 许可与版权
-================================================================
+WenQuanYi Bitmap Song — licence and copyright
+=============================================
 
 Copyright (C) 2004-2010, The WenQuanYi Project Board of Trustees and Qianqian Fang
-字体基于 firefly 的点阵字体作品 (firefly[at]firefly(dot)idv(dot)tw)
+Based on firefly's bitmap font (firefly[at]firefly(dot)idv(dot)tw)
 
-许可：GNU General Public License version 2，附加字体嵌入例外条款
-      (GPL-2.0 with font embedding exception)
+Licence: GNU General Public License version 2, with a font embedding exception
+         (GPL-2.0 with font embedding exception)
 
-本仓库随附的 `WenQuanYi Bitmap Song 14px.ttf` 是 AmusementClub 依据文泉驿点阵宋体
-v1.0.0-RC1 (Hero) 的 PCF 点阵字体转换而来的 TTF 版本，该 TTF 继承文泉驿点阵宋体
-原有的 GPL v2 + 字体嵌入例外授权。
+The file `src/Darklands.Presentation/Resources/ChineseFont.ttf` in this repository is
+WenQuanYi Bitmap Song 12 px: the TTF conversion of the v1.0.0-RC1 (Hero) PCF bitmap font made by
+AmusementClub, inheriting the original font's GPL v2 + font embedding exception.
 
-  上游项目   : https://wenq.org/wqy2/index.cgi?BitmapSong
-  TTF 转换   : https://github.com/AmusementClub/WenQuanYi-Bitmap-Song-TTF
-  上游许可原文: https://github.com/AmusementClub/WenQuanYi-Bitmap-Song-TTF/blob/master/Original%20Fonts/README
+  Upstream project : https://wenq.org/wqy2/index.cgi?BitmapSong
+  TTF conversion   : https://github.com/AmusementClub/WenQuanYi-Bitmap-Song-TTF
+  Upstream licence : https://github.com/AmusementClub/WenQuanYi-Bitmap-Song-TTF/blob/master/Original%20Fonts/README
 
 ------------------------------------------------------------------------
-本 mod 的合规要点
+How this fork uses it
 ------------------------------------------------------------------------
 
-1. 本 mod 的 `plugin.dll` **不内嵌**该字体。字体作为独立文件在运行时从磁盘加载
-   （见 `plugin.c` 中的 `FONT_FILE`），因此 DLL 与字体是两个相互独立的作品。
-2. 本仓库以 GPL-2.0 条款再分发该字体文件（**未作任何修改**）。
-3. 本 mod 的**代码**（`plugin.c`、`Makefile`）采用 MIT 许可，见仓库根目录
-   `LICENSE`。代码与字体是相互独立的作品，聚合分发不使另一方落入 GPL 的
-   约束范围（GPL-2.0 第 2 条末段）。
-4. 若下游修改了该字体，可继续沿用此例外条款（非强制）；若不希望沿用，请从
-   你的版本中删除该例外条款的声明。
+1. The font file is redistributed **unmodified**, under GPL-2.0 with the font embedding
+   exception (the exception text is reproduced below).
+2. It is embedded in the assembly as the managed resource
+   `Darklands.Presentation.Resources.ChineseFont.ttf` and rasterised at run time by
+   StbTrueTypeSharp. It can be replaced without rebuilding: set `DARKLANDS_CHINESE_FONT`,
+   or the `chinesefont` key of `local/paths.json`, to another TTF.
+3. The exception covers embedding the font in a document. The font file itself keeps its own
+   licence; the rest of the program stays under the project's GPL-3.0-or-later.
+4. If you modify the font you may extend the exception to your version (not obligatory); if you
+   do not wish to, delete the exception statement from your version.
 
 ------------------------------------------------------------------------
 字体嵌入例外条款（上游 README 原文）
