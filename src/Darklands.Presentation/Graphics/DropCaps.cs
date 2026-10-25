@@ -24,6 +24,10 @@ public static class DropCaps
         return _letters[letter - 'A'];
     }
 
+    /// <summary>The same, for a codepoint (see <see cref="TextDecoder"/>): a letter outside A..Z is no drop cap.</summary>
+    public static IndexedImage? Get(GameAssets assets, int letter) =>
+        letter is < 'A' or > 'Z' ? null : Get(assets, (byte)letter);
+
     private static IndexedImage[] Cut(IndexedImage sheet)
     {
         var letters = new IndexedImage[26];

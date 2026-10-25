@@ -11,12 +11,19 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\OpeningTimer.txt" LogicalName="Darklands.Presentation.Resources.OpeningTimer.txt" />
+    <EmbeddedResource Include="Resources\ChineseFont.ttf" LogicalName="Darklands.Presentation.Resources.ChineseFont.ttf" Condition="Exists('Resources\ChineseFont.ttf')" />
+    <EmbeddedResource Include="Resources\translations_zh.tsv" LogicalName="Darklands.Presentation.Resources.translations_zh.tsv" Condition="Exists('Resources\translations_zh.tsv')" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StbTrueTypeSharp" Version="1.26.12" />
   </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
 </Project>

@@ -228,7 +228,7 @@ public sealed partial class CardScreen(GameUi ui, Func<CardContext> context, Par
         var b = _messages.Blocks[block];
         _lastBlock = b;
         var c = context();
-        var text = TextVariables.Expand(b.Text, c);
+        var text = TextVariables.Expand(TranslationTable.Current?.Translate(b.Text) ?? b.Text, c);
         var layout = new CardTextLayout(ui.CardText);
         var areas = layout.Draw(_canvas, text, WindowX + b.X + 5, b.Y + 5, b.Width - 10, new CardTextLayout.Settings
         {
@@ -244,7 +244,7 @@ public sealed partial class CardScreen(GameUi ui, Func<CardContext> context, Par
         return _lastAreas = areas;
     }
 
-    private Content.Formats.Graphics.IndexedImage? DropCap(byte letter) => DropCaps.Get(ui.Assets, letter);
+    private Content.Formats.Graphics.IndexedImage? DropCap(int letter) => DropCaps.Get(ui.Assets, letter);
 
     /// <summary>
     /// After reading, the picture fades: its colours 0x20..0x7F turn grey, its colours

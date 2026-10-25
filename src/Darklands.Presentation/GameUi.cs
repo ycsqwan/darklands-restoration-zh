@@ -82,7 +82,28 @@ public sealed class GameUi
     //   side window, pointer DS:0104), DS:0106 (DS:0118), DS:0156 (DS:0168, the panel's page), DS:017E (DS:0190), DS:0192 (DS:01A4)
     //   have font 1; the menu bar loop root 0000:0000 sets the card window's font to 1 while the bar runs. checked against the DS bytes
     // C: read on first use: the program start checks FONTS.FNT where the original loads it (with the graphics driver).
-    public TextPainter Text => _text ??= new TextPainter(Assets.Font(1));
+    /// <summary>
+    /// The TrueType font for the characters the bundled bitmap fonts cannot draw (Chinese, and anything above
+    /// Latin-1), or null to keep the original's behaviour. The game ships no such font: one is loaded from the
+    /// file named by local/paths.json "chinesefont" or DARKLANDS_CHINESE_FONT, else the font embedded in the assembly.
+    /// </summary>
+    // The em square (not the ascent..descent span) is the grid a bitmap-derived face is aligned to: WenQuanYi Bitmap
+    // Song has unitsPerEm == ascent-descent == 1500, so 15 px per em puts its outlines back on whole pixels.
+    public CjkFont? ChineseFont => _chinese ??= CjkFont.LoadEmbedded(
+        LocalPaths.Get("chinesefont", "DARKLANDS_CHINESE_FONT"),
+        ChineseFontEm,
+        ChineseFontLineHeight,
+        message => Trace?.Invoke(message));
+
+    /// <summary>The em square in pixels the Chinese font is rasterised at (15: WenQuanYi Bitmap Song's grid).</summary>
+    public static int ChineseFontEm => 15;
+
+    /// <summary>The distance between two baselines of the Chinese text (13 px: 12 px glyphs with room to breathe).</summary>
+    public static int ChineseFontLineHeight => 13;
+
+    private CjkFont? _chinese;
+
+    public TextPainter Text => _text ??= new TextPainter(Assets.Font(1)) { Cjk = ChineseFont };
 
     private TextPainter? _text;
 
@@ -91,7 +112,7 @@ public sealed class GameUi
     //   DS:012E and DS:0142 (pointer DS:0154) have font 3 too; the load-game screen R037+0x8B76 (1C7D:09C6) sets the card window's font
     //   to 3 again. The driver's font slot n is font n - 1 of FONTS.FNT (drv+0x13A4: the slot indexes the offset table at the start of
     //   the file the loader root 047C:07CE reads behind the driver). checked against asm and the DS bytes; tests: tools/visuals/compare.py
-    public TextPainter CardText => _cardText ??= new TextPainter(Assets.Font(3));
+    public TextPainter CardText => _cardText ??= new TextPainter(Assets.Font(3)) { Cjk = ChineseFont };
 
     private TextPainter? _cardText;
 

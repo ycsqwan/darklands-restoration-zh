@@ -21,9 +21,16 @@ public sealed class TextPainter(FntFont font)
 {
     public FntFont Font => font;
 
-    /// <summary>The font's line height (font_height): the glyph height plus the font's line spacing.</summary>
+    /// <summary>
+    /// The TrueType font for the characters the bitmap fonts cannot draw (Chinese, and anything else above
+    /// Latin-1), or null to keep the original's behaviour. A byte that names no glyph of either font takes no
+    /// room, as it always did.
+    /// </summary>
+    public CjkFont? Cjk { get; init; }
+
+    /// <summary>The font's line height (font_height): the glyph height plus the font's line spacing, or the Chinese font's when one is loaded.</summary>
     // orig: font_height drv+0x11FA: the header bytes at -4 (height) + -2 (line spacing) before the glyph data
-    public int LineHeight => font.CharacterHeight + font.LineSpacing;
+    public int LineHeight => Cjk is null ? font.CharacterHeight + font.LineSpacing : Math.Max(font.CharacterHeight + font.LineSpacing, Cjk.LineHeight);
 
     /// <summary>The colour the last <see cref="Draw(Canvas, int, int, ReadOnlySpan{byte}, byte, int)"/> ended with (after its colour codes).</summary>
     public byte DrawColor { get; private set; }
@@ -35,7 +42,13 @@ public sealed class TextPainter(FntFont font)
             ? (font.Unknown05 != 0 ? font.Unknown05 : font.GetCharacterWidth(c)) + font.CharacterSpacing
             : 0;
 
-    public int Measure(ReadOnlySpan<byte> text)
+    /// <summary>Horizontal advance of one codepoint: the bitmap font's for the codes it has, the Chinese font's above Latin-1, 0 otherwise.</summary>
+    public int Advance(int c) =>
+        c < 0 ? 0 : c < 0x80 ? Advance((byte)c) : Cjk is { } face && face.Has(c) ? face.Advance(c) : 0;
+
+    public int Measure(ReadOnlySpan<byte> text) => Measure(TextDecoder.Decode(text));
+
+    public int Measure(ReadOnlySpan<int> text)
     {
         var width = 0;
         foreach (var c in text)
@@ -49,7 +62,7 @@ public sealed class TextPainter(FntFont font)
         return width;
     }
 
-    public int Measure(string text) => Measure(Encode(text));
+    public int Measure(string text) => Measure(TextDecoder.Decode(Encode(text)));
 
     /// <summary>
     /// Draws text and returns the x after its last character. A byte from 0x80 switches the colour to its
@@ -63,7 +76,11 @@ public sealed class TextPainter(FntFont font)
         Draw(canvas, x, y, text, color, TextMode.Copy, right);
 
     /// <summary>Draws text combining each glyph pixel with the screen as <paramref name="mode"/> says (see <see cref="TextMode"/>).</summary>
-    public int Draw(Canvas canvas, int x, int y, ReadOnlySpan<byte> text, byte color, TextMode mode, int right = int.MaxValue)
+    public int Draw(Canvas canvas, int x, int y, ReadOnlySpan<byte> text, byte color, TextMode mode, int right = int.MaxValue) =>
+        Draw(canvas, x, y, TextDecoder.Decode(text), color, mode, right);
+
+    /// <summary>Draws codepoints (see <see cref="TextDecoder"/>) combining each glyph pixel with the screen as <paramref name="mode"/> says.</summary>
+    public int Draw(Canvas canvas, int x, int y, ReadOnlySpan<int> text, byte color, TextMode mode, int right = int.MaxValue)
     {
         var current = color;
         var room = right == int.MaxValue ? int.MaxValue : right - x + 1;
@@ -78,20 +95,35 @@ public sealed class TextPainter(FntFont font)
             {
                 break;
             }
+            if (c < 0)
+            {
+                current = ColorCode(-c, color);
+                continue;
+            }
             if (c >= 0x80)
             {
-                current = c == 0xFF ? color : (byte)(c & 0x7F);
-                continue;
+                if (Cjk is not { } face || !face.Has(c))
+                {
+                    continue;
+                }
+                var chinese = face.Advance(c);
+                var clipped = Math.Min(chinese, room);
+                face.Draw(canvas, x, y, c, current, mode, x + clipped - 1);
+                x += clipped;
+                room -= chinese;
             }
-            var advance = Advance(c);
-            if (advance == 0)
+            else
             {
-                continue;
+                var advance = Advance(c);
+                if (advance == 0)
+                {
+                    continue;
+                }
+                var visible = Math.Min(advance, room);
+                DrawGlyph(canvas, x, y, (byte)c, current, visible, mode);
+                x += visible;
+                room -= advance;
             }
-            var visible = Math.Min(advance, room);
-            DrawGlyph(canvas, x, y, c, current, visible, mode);
-            x += visible;
-            room -= advance;
             if (room <= 0)
             {
                 break;
@@ -100,6 +132,9 @@ public sealed class TextPainter(FntFont font)
         DrawColor = current;
         return x;
     }
+
+    // orig: drv+0x0FDC: a colour code's low seven bits, 0xFF back to the call's colour, 0x80 a no-op
+    private static byte ColorCode(int code, byte fallback) => code == 0xFF ? fallback : (byte)((code & 0x7F) == 0 ? 0xFF : code & 0x7F);
 
     public int Draw(Canvas canvas, int x, int y, string text, byte color, int right = int.MaxValue) => Draw(canvas, x, y, Encode(text), color, right);
 
@@ -149,7 +184,22 @@ public sealed class TextPainter(FntFont font)
     // orig: root 0265:0004 draft (bytes match) and drv+0x0FDC: the colour codes as the driver reads them (the map row of DrawCoded)
     public int DrawCoded(Canvas canvas, int x, int y, string text, byte color) => Draw(canvas, x, y, Encode(text), color);
 
-    public static byte[] Encode(string text) => System.Text.Encoding.Latin1.GetBytes(text);
+    /// <summary>
+    /// Encodes text as the game's bytes: Latin-1 when every character fits in a byte, so a byte with the top
+    /// bit set stays a colour code (that is how the menus draw their hotkey letters, and how the screens
+    /// build coloured option lines), and UTF-8 otherwise, which is how Chinese text reaches the canvas.
+    /// </summary>
+    public static byte[] Encode(string text)
+    {
+        foreach (var c in text)
+        {
+            if (c > 0xFF)
+            {
+                return System.Text.Encoding.UTF8.GetBytes(text);
+            }
+        }
+        return System.Text.Encoding.Latin1.GetBytes(text);
+    }
 }
 
 /// <summary>How a text pixel combines with the screen: bits 8..9 of the window's colour word (0x380 = colour 0x80 by xor).</summary>

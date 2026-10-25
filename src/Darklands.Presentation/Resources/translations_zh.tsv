@@ -1,0 +1,105 @@
+# Darklands Chinese translation table.
+# One line per English run: english<TAB>chinese. A run is a maximal sequence of printable
+# ASCII bytes (0x20..0x7F) in one card; control codes (0x01..0x1F) and colour codes
+# (0x80..0xFF) separate runs and are never translated. Runs left out of this file stay English.
+# The option bullet "...", the option numbers and whitespace-only padding runs are kept in
+# English on purpose: they carry the layout of every option list.
+#
+leave.	离开。
+You...	你……
+You decide to...	你决定……
+call upon a saint for aid.	祈求圣人援助。
+call on a saint.	祈求圣人。
+You ...	你……
+You decide to ...	你决定……
+pray to a saint for aid.	祈求圣人援助。
+the main street of $PlaceName.	$PlaceName的主要街道。
+draw weapons and fight.	拔出武器战斗。
+pray to a saint for guidance.	祈求圣人指引。
+In the chaos and confusion, it's easy for you to slip down a side alley and quietly climb through an unwatched window.	在混乱之中，你可以轻易溜进一条偏僻的小巷，悄悄翻过一扇无人看守的窗户。
+It is quite easy to discover that currently the guild members $Support changes in the government of $PlaceName.	很容易就能发现，行会成员目前$Support$PlaceName政府的变动。
+hide nearby and watch the leader's home.	躲在附近监视首领的住所。
+"Don't you know what time it is?" he grumbles. "Oh well, come around back, if you must."	“你不知道现在是什么时辰吗？”他嘟囔道。“好吧，如果你非要来，就从后门进来。”
+Big, black clouds of smoke billow through the street. Amid cries of "Fire!" everybody rushes for the guild building. The press of excited and concerned citizens prevents you from finding a way to sneak inside.	大片黑色浓烟滚滚漫过街道。在“着火了！”的呼喊声中，所有人都冲向行会大楼。兴奋而焦急的人群挤作一团，使你根本找不到溜进去的机会。
+awaken the guild leader for a private conference.	叫醒行会首领进行密谈。
+cry out that you surrender yourselves to their mercy.	大声投降，任凭他们发落。
+leave by a side street.	从侧街离开。
+leave by the main street.	从主街离开。
+nothing -- you turn and leave.	什么都不做——你转身离开。
+the wharves and docks.	码头与船坞。
+use alchemy to stage a diversion, then sneak into the guild leader's home.	用炼金术制造骚动，然后溜进行会首领的住所。
+"I am a poor woman, now," she confesses, "and he loves me enough to help me and my baby daughter survive."	“我现在是个可怜的女人，”她坦白道，“他爱着我，足以帮助我和我的小女儿活下来。”
+"You are besmirching the name of our fine guild with these evil accusations and your false evidence!" cries one journeyman.	“你用这些恶毒的指控和伪造的证据玷污我们行会的美名！”一名工匠喊道。
+-- the $CityLordTitle	——$CityLordTitle
+A dwarf curse is triggered! $ChosenOneName collapses from agonizing pain. When $he awakes, $he realizes that $he is an inch shorter of height! This reduction in size has also had an effect on $his muscle mass, and $he is not so strong as before.	触发了一道矮人诅咒！$ChosenOneName痛苦地倒下。当$he醒来时，$he发现自己矮了一英寸！体型的缩小也影响了$his肌肉，$he不像从前那样强壮了。
+After quietly climbing to the second story and unlocking a shutter, you silently sneak into a storage room, where you spend additional time unlocking its door from the inside.	你悄悄爬上二楼，撬开一扇百叶窗，无声地溜进一间储藏室，又从里面花时间把门上的锁打开。
+Armorer's Way.	盔甲匠之路。
+As you piece together various tales, you suspect that the guild leader may be a secret agent, working to betray the city to an arch-enemy. Unfortunately, you'll need letters or similar documents to prove this.	你把各种传闻拼凑起来，怀疑行会首领可能是一名密探，正暗中把这座城市出卖给死敌。可惜，你需要信件或类似的文件才能证明这一点。
+By listening carefully and asking a few leading questions, you discover that the guild leader probably poisoned his predecessor. Rumor says the poisoner wasn't "taken care of" properly, and now hides somewhere in the city.	你仔细聆听，又问了几个引导性的问题，发现行会首领很可能毒死了他的前任。传言说那个下毒者没有被妥善“处理”，如今正藏在城里的某个地方。
+Curious, you sneak up and steal one from the wagon. It is a shoddy imitation of the guild's wares. Inside, you see workmen busily affixing the guild leader's stamp to each item.	你心生好奇，悄悄上前从大车上偷了一个。那是行会货品的粗劣仿制品。在里面，你看到工匠们正忙着把行会首领的印记盖在每一件东西上。
+Despite $his best efforts, $ChosenOneName just doesn't have enough speaking skill, local respect, and raw charisma to overcome the doubts of the guildsmen.	尽管$he尽了最大的努力，$ChosenOneName的口才、在当地的威望和天生的魅力都不足以打消工匠们的疑虑。
+However, $ChosenOneName isn't quite glib enough to induce the guildsmen to speak candidly about their leadership.	然而，$ChosenOneName的话还不够圆滑，无法诱使工匠们坦率地谈论他们的领导。
+Monstrous dwarf magic fills the air and you realize that $ChosenOneName has chosen the wrong knob. $He cries out in surprise and pain as the magic constricts $his limbs and body. When the effect ends, you are amazed to see that your leader's arms and legs have each shrunk by a half-inch, thus hampering $his agility.	可怕的矮人魔法弥漫在空气中，你意识到$ChosenOneName选错了旋钮。魔法收紧$his四肢和身躯，$he痛苦地惊叫起来。效果结束时，你惊讶地发现你们首领的手臂和腿各缩了半英寸，从而妨碍了$his灵活。
+Now doubly suspicious, you fade into the darkness and follow the wagon back to its source, a secret warehouse full of cheap goods far below guild standards!	你更加怀疑，于是隐入黑暗，跟着大车回到它的源头——一间秘密仓库，里面堆满了远低于行会标准的廉价货！
+Soldier's Road.	士兵之路。
+Swordsmith's Lane.	铸剑匠巷。
+The guildsmen are horrified by your allegations. However, when you give them the evidence, they promise to hold a special meeting. It is clear that the meeting will produce a new guild leader.	工匠们对你的指控感到震惊。然而，当你把证据交给他们时，他们答应召开一次特别会议。显然，这次会议将产生一位新的行会首领。
+You spend an entire night around the guild, watching nothing but the rats and mice. As the sun rises, everybody is yawning and stiff.	你在行会周围守候了整整一夜，只看得见老鼠。太阳升起时，人人都在打哈欠，浑身僵硬。
+You spend hours looking for a chance to sneak in, but you can't seem to find a good opportunity. Perhaps you need better luck, or perhaps you should be more stealthy and streetwise!	你花了几个小时寻找溜进去的机会，却似乎总找不到好时机。也许你需要更好的运气，也许你该更隐秘、更精通街头之道！
+a side street leading elsewhere.	通往别处的侧街。
+decide to travel elsewhere.	决定前往别处。
+draw your weapons and attack.	拔出武器进攻。
+inquire about the guild's leaders and politics.	打听行会的首领与政治。
+leave at once.	立刻离开。
+pray to a saint for peaceful passage.	祈求圣人保佑平安通行。
+quietly sneak around them and avoid any fighting.	悄悄绕过他们，避免任何战斗。
+request a meeting with the guild's masters.	请求与行会大师们会面。
+slip away down a side street.	沿着侧街溜走。
+the Square of Bowyers and Gunsmiths.	制弓匠与枪匠广场。
+the Street of the Blacksmiths.	铁匠街。
+use your stealth and streetwise experience to sneak into the guild leader's home.	运用你的隐秘与街头经验，溜进行会首领的住所。
+"Go away. We're closed. It's past curfew!" screams the guildmaster's wife in a shrew-like voice.	“走开。我们关门了。已经过了宵禁！”行会会长的妻子尖声叫道，声音像只泼妇。
+A loud 'Snick!' pierces the air and a hideous dwarf curse strikes! $ChosenOneName swoons in dismay, $his mind clouded by frantic thoughts and alien concepts. You rush to see how badly $he is hurt, and $he awakes, but the harm is done. $He is now permanently just a little less intelligent.	一声响亮的“咔嚓！”划破空气，一道丑陋的矮人诅咒袭来！$ChosenOneName颓然昏倒，$his神志被狂乱的念头和陌生的念头笼罩。你急忙上前查看$he伤得多重，$he醒了过来，但伤害已经造成。$He的智力从此永久地降低了一点。
+A minute later, he lets you in through the back door.	一分钟后，他让你从后门进去了。
+After midnight, a cloaked figure comes to the guildhouse rear door and receives an envelope from the guild's leader. When the messenger leaves, you follow this man and waylay him with naked steel.	午夜之后，一个身披斗篷的人来到行会后门，从行会首领手中接过一个信封。信使离开后，你尾随此人，并亮出利刃拦住了他。
+It is a strange story the lord has told you. You ponder its meaning.	领主给你讲了一个奇怪的故事。你思索着它的含义。
+She hesitates, then replies, "I make sure that certain birth documents are never found. These documents show him to be the son of a peasant serf, and therefore an illegal resident of $PlaceName!"	她犹豫了一下，然后回答：“我确保某些出生文件永远不会被发现。这些文件证明他是农民农奴的儿子，因此是$PlaceName的非法居民！”
+She replies, "It is simple. I performed a valuable service for him, and now he pays me regularly."	她回答：“很简单。我为他做了一件有价值的事，现在他定期付钱给我。”
+Sometime after midnight, you see a covered wagon pull up to the back entrance of the guildhouse. Very quietly the guild leader supervises the unloading of certain objects.	午夜过后不久，你看见一辆盖着篷的大车停在行会后门口。行会首领非常安静地监督着某些物品的卸货。
+Suddenly, $ChosenOneName holds up $his hand.	突然，$ChosenOneName举起$his手。
+The door slides open. A stunted figure steps forth out of the shadows. You finger your weapons, ready for anything.	门滑开了。一个矮小的身影从阴影中走出。你手指按在武器上，随时准备应对一切。
+The kobold replies, in weird quavering meeps,	狗头人用怪异颤抖的吱吱声回答，
+To prove this you need to find these goods, or steal his "secret ledgers" that document this illegal business.	要证明这一点，你需要找到这些货物，或者偷走记录这笔非法生意的“秘密账本”。
+You fail to conceal yourself properly. In $Number1 hours you see the city watch approaching with torches and lanterns. You are forced to abandon your hiding place and slip away down the side streets.	你没能好好隐藏自己。$Number1小时后，你看见城市卫队举着火把和灯笼逼近。你被迫放弃藏身之处，沿着侧街溜走。
+You follow this secretive person, then at knifepoint pull her into a side alley, saying, "Tell us everything about the guild leader, and your life will be spared."	你跟踪这个形迹可疑的人，然后持刀把她拉进一条侧巷，说道：“把你知道的行会首领的事都告诉我们，就饶你一命。”
+You knock hard, and eventually an upstairs shutter cracks. They take one look at you and slam the shutter closed again.	你使劲敲门，终于，楼上一扇百叶窗开了一条缝。他们看了你一眼，又把百叶窗砰地关上了。
+Your winning ways induce them to reveal just enough information for you to suspect that the guildmaster may be passing counterfeit coins. Of course, you'll need to find the coin mold-blanks to prove this.	你的迷人风度使他们透露了足够的信息，让你怀疑行会会长可能在流通假币。当然，你需要找到铸币模具毛坯才能证明这一点。
+a specific building, home or other location.	某座特定的建筑、住宅或其他地点。
+attack.	攻击。
+attempt the wall during the night; it will take a number of hours to find the best spot.	在夜间翻越城墙；需要几个小时才能找到最佳位置。
+attempt to cross the wall during the day; it will take a few hours to find the best point.	在白天翻越城墙；需要几个小时才能找到最佳位置。
+awaken somebody to make a purchase or a sale.	叫醒某人来购买或出售。
+call upon a saint for aid. 	祈求圣人援助。
+go to the main gate in broad daylight.	在大白天前往正门。
+guard the guild block from saboteurs.	守卫行会街区，提防破坏者。
+other locations you remember.	你记得的其他地点。
+pick a lock and sneak into the leader's home.	撬开锁，溜进首领的住所。
+pray that a saint can help you pass peacefully. 	祈求圣人帮助你平安通过。
+submit to the guards.	向卫兵投降。
+the main street.	主街。
+use a potion.	使用一瓶药水。
+Camp outside the city.	在城外扎营。
+Current reputation in $PlaceName is $Number1.	你在$PlaceName的当前声望为$Number1。
+Current test options are...	当前测试选项如下……
+Enter $PlaceName while it's at peace.	在$PlaceName处于和平时期时进入。
+Enter $PlaceName while it's at war.	在$PlaceName处于战争状态时进入。
+Enter $PlaceName while it's preparing for war.	在$PlaceName准备开战时进入。
+Go to the map of Germany.	前往德意志地图。
+Initial Card for Testing Only. Party has $Money1. 	初始测试卡。队伍拥有$Money1。
+Make your local reputation +99 (local superhero).	将本地声望设为 +99（地方英雄）。
+Make your local reputation -99 (the worst).	将本地声望设为 -99（最差）。
+Make your local reputation 0 (unknown).	将本地声望设为 0（无名）。
+Stay at an inn beside the city.	住在城边的旅店。
+a	一个
+See figure 0.	见图 0。
+character you have known.	你已认识的角色。

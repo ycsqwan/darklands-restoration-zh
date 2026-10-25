@@ -60,7 +60,7 @@ public sealed class CardTextLayout(TextPainter painter)
         public TextAlignment Alignment { get; init; } = TextAlignment.Left;
 
         /// <summary>Picture for an illuminated capital, or null to draw the first letter normally.</summary>
-        public Func<byte, Content.Formats.Graphics.IndexedImage?>? DropCap { get; init; }
+        public Func<int, Content.Formats.Graphics.IndexedImage?>? DropCap { get; init; }
 
         public byte Color { get; init; }
 
@@ -73,7 +73,11 @@ public sealed class CardTextLayout(TextPainter painter)
 
     /// <summary>Draws <paramref name="text"/> in the column (x, y, width) and returns the option areas.</summary>
     // orig: draw_text_wrapped(w, text, width, x, y, spacing, hs, init, stop, leading, icon, color) root 0265:0134
-    public List<OptionArea> Draw(Canvas canvas, byte[] text, int x, int y, int width, Settings settings)
+    public List<OptionArea> Draw(Canvas canvas, byte[] text, int x, int y, int width, Settings settings) =>
+        Draw(canvas, TextDecoder.Decode(text), x, y, width, settings);
+
+    /// <summary>Draws codepoints (see <see cref="TextDecoder"/>) in the column; a colour code arrives as a negative value.</summary>
+    public List<OptionArea> Draw(Canvas canvas, int[] text, int x, int y, int width, Settings settings)
     {
         var areas = new List<OptionArea>();
         var spacing = settings.Spacing ?? painter.LineHeight;
@@ -90,7 +94,7 @@ public sealed class CardTextLayout(TextPainter painter)
         var color = settings.Color;
         var mode = TextMode.Copy;
 
-        if (settings.DropCap is { } dropCap && text.Length > 0 && text[0] is > (byte)'@' and < (byte)'[' &&
+        if (settings.DropCap is { } dropCap && text.Length > 0 && text[0] is > '@' and < '[' &&
             dropCap(text[0]) is { } cap)
         {
             // C: the letter is a saved driver picture (gfx_save_rect at start-up) drawn with gfx_draw_pic: colour 0 transparent, its black is colour 5.
@@ -120,7 +124,7 @@ public sealed class CardTextLayout(TextPainter painter)
             }
         }
 
-        byte At(int i) => i >= 0 && i < text.Length ? text[i] : (byte)0;
+        int At(int i) => i >= 0 && i < text.Length ? text[i] : 0;
 
         var more = true;
         while (more)
@@ -215,13 +219,20 @@ public sealed class CardTextLayout(TextPainter painter)
                 CloseArea(settings.Leading + spacing);
             }
 
-            // Break the line after the last space or hyphen that fits.
-            while (At(cursor) is not (byte)' ' and not 0 and not (byte)'\n' and not (byte)'-' &&
-                   start < cursor && cursor > lineStart)
+            // Break the line after the last space or hyphen that fits. A line with no break
+            // opportunity at all keeps its width-limited break: Chinese has no spaces, so walking
+            // back to the line's start would throw the whole line away.
+            var breakCursor = cursor;
+            while (At(breakCursor) is not ' ' and not 0 and not '\n' and not '-' &&
+                   start < breakCursor && breakCursor > lineStart)
             {
-                cursor--;
-                count--;
+                breakCursor--;
             }
+            if (breakCursor > lineStart || At(breakCursor) == ' ' || At(breakCursor) == '-')
+            {
+                cursor = breakCursor;
+            }
+            count = cursor - lineStart;
 
             // Nothing but spaces left on this line: the line ends here.
             var rest = cursor;
@@ -289,10 +300,15 @@ public sealed class CardTextLayout(TextPainter painter)
     /// <summary>The height the text would take in a column of <paramref name="width"/> (lines times line height plus leading), without drawing anywhere visible.</summary>
     // orig: measure_text_wrapped root 0265:0654 draft (8 of 10 functions of its file match, this one does not): same layout, no output
     // DIVERGENCE: measured by running the drawing layout on a scratch screen instead of a second copy of the loop; the C's copy has one difference: it does not track conditional passages (0x01 .. 0x13) and counts the bytes of a skipped option line differently, which the texts measured (hints, short messages) do not contain.
-    public int MeasureHeight(byte[] text, int width, int leading) => MeasureHeight(text, width, new Settings { Leading = leading });
+    public int MeasureHeight(byte[] text, int width, int leading) => MeasureHeight(TextDecoder.Decode(text), width, new Settings { Leading = leading });
+
+    /// <summary>The height codepoints would take in a column of <paramref name="width"/>, without drawing anywhere visible.</summary>
+    public int MeasureHeight(int[] text, int width, int leading) => MeasureHeight(text, width, new Settings { Leading = leading });
 
     /// <summary>The height of the text laid out with these settings (hidden option lines left out).</summary>
-    public int MeasureHeight(byte[] text, int width, Settings settings)
+    public int MeasureHeight(byte[] text, int width, Settings settings) => MeasureHeight(TextDecoder.Decode(text), width, settings);
+
+    public int MeasureHeight(int[] text, int width, Settings settings)
     {
         var scratch = new Canvas(new Platform.Screen());
         Draw(scratch, text, 0, 0, width, settings);
@@ -302,13 +318,13 @@ public sealed class CardTextLayout(TextPainter painter)
     // C: the width of the part of the line before the 0x1D marker is text_pixel_width of a copy of the raw bytes, control codes included (their char_width is whatever the driver gives them); here the control codes are left out, which is the same only if they have no width in the font.
     // C: char_width (drv+0x11A9) gives a code outside the font's first..last range no width: fonts 1 and 2 start at 0x1F, so in the card
     //   window's font the control codes take no room; font 0 starts at code 0 and gives them the widths of its table. checked against asm
-    private static bool IsOptionMarker(byte c) => c is PlainOption or ItemOption or SaintOption or BattleOption;
+    private static bool IsOptionMarker(int c) => c is PlainOption or ItemOption or SaintOption or BattleOption;
 
-    private static bool IsControl(byte c) =>
+    private static bool IsControl(int c) =>
         c is Paragraph or PlainOption or ItemOption or SaintOption or BattleOption or Indent or 0x0D
             or ConditionStart or ConditionEnd;
 
-    private static OptionKind KindOf(byte marker) => marker switch
+    private static OptionKind KindOf(int marker) => marker switch
     {
         ItemOption => OptionKind.Items,
         SaintOption => OptionKind.Saints,
@@ -317,9 +333,9 @@ public sealed class CardTextLayout(TextPainter painter)
     };
 
     /// <summary>The visible characters of text[from .. from+count), control codes removed.</summary>
-    private static byte[] Printable(byte[] text, int from, int count)
+    private static int[] Printable(int[] text, int from, int count)
     {
-        var result = new List<byte>(Math.Max(0, count));
+        var result = new List<int>(Math.Max(0, count));
         for (var i = 0; i < count && from + i < text.Length; i++)
         {
             var c = text[from + i];
