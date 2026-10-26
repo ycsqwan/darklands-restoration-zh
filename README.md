@@ -96,13 +96,13 @@ This covers the project's own code only. *Darklands* itself (© 1992 MicroProse)
 not licensed by it; you need your own copy of the game. Third-party components keep their own licences
 (see `THIRD_PARTY_NOTICES.md`).
 
-## 中文化（Simplified Chinese）
+## 汉化（Simplified Chinese）
 
 本 fork 在 Restoration Project 之上加入**简体中文**。上游没有国际化支持，也没有 mod / 插件接口，
 所以 CJK 渲染路径是**源码树的一部分**，而不是外挂的插件。
 
-> ⚠️ **实验性构建（experimental）**：文本覆盖率 **100%**（按出现次数），但**全部为机器翻译，
-> 未经人工审校**；卡片换行、选项列表、谜题旋钮、`$he/$his` 代词替换等**尚未实测**。
+> ⚠️ **实验性构建（experimental）**：卡片文本覆盖率 **100%**，译文为**人工翻译**（机器翻译已弃用）。
+> 但卡片换行、选项列表、谜题旋钮、`$he/$his` 代词替换等**尚未全面实测**。
 > 欢迎试用与反馈，但请勿视作成品。详见[已知问题](#已知问题)。
 
 ---
@@ -111,15 +111,32 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 | 项目 | 状态 |
 | --- | --- |
-| 覆盖的文本 | 卡片文本的全部可打印 run（7,729 条） |
-| 唯一 run | 7,729 条，已译 **7,731 条（100%）** |
-| 覆盖率 | **100.00%**（按出现次数 13,703 / 13,703） |
-| 表文件 | `translations_zh.tsv`，7,738 行 / 1,701,097 字节 |
-| 字体 | 文泉驿点阵宋体 **12px**（WenQuanYi Bitmap Song） |
+| 卡片 run 覆盖率 | **100.00%**（7,729 / 7,729） |
+| 表条目 | **8,636 条**（8,564 条译文 + 72 条恒等占位） |
+| 表文件 | `translations_zh.tsv`，8,644 行 / 1,790,217 字节 |
+| 卡片字体 | 文泉驿点阵宋体 **12px**（WenQuanYi Bitmap Song） |
+| 界面字体 | Fusion Pixel **8px** 等宽（商店、祈祷等 UI 行） |
 | 渲染方式 | StbTrueTypeSharp → 320×200 索引画布（二值，无 alpha 混合） |
-| 覆盖的 UI | 卡片窗口、侧窗、屏幕页、队伍面板、菜单栏 |
+| 译文来源 | **人工翻译**（Qwen-MT 已弃用） |
+| 覆盖的 UI | 卡片窗口、侧窗、屏幕页、队伍面板、菜单栏、商店 / 交易 / 拾取、祈祷 |
 | 未验证 | 选项列表、谜题旋钮、代词替换 |
-| 未翻译 | 图片内嵌文字（需 HD 包）、代码内硬编码字符串 853 条 |
+| 未翻译 | 图片内嵌文字（需 HD 包）、部分代码内硬编码字符串 |
+
+---
+
+### 本轮进展
+
+- **66 条恒等占位修复**：早期的「结构性 run 恒等销账」机制误把 66 条真卡片文本（叙述 / 对话 /
+  选项整句）写成 `英文→英文` 恒等条目，于是它们永远命中不了翻译表、游戏里一直是英文。
+  已全部人工译出。
+- **圣徒名与描述**：136 位圣徒的全名 / 短名与描述。
+- **商店 / 交易 / 拾取界面**：整行原来是一个 run，而价格、品质、重量、数量是运行时数字，
+  整行永远不可能命中静态翻译表。改为**模板 + 参数**（`TranslationTable.Line`），
+  行被拆成可译片段。
+- **祈祷界面**：状态、菜单、圣日、圣徒描述均走查表。
+- **卡片折行修复**（影响全部中文卡片文本）：每行吞 1 个字符、中文行退到行内最后一个空格断行、
+  行首出现收尾标点。
+- **8px 界面字体**：商店等 UI 行改用 Fusion Pixel 8px 等宽；卡片正文的 12px 字体保持不变。
 
 ---
 
@@ -136,7 +153,8 @@ not licensed by it; you need your own copy of the game. Third-party components k
    DARKLANDS_TRANSLATIONS=<path-to>\translations.tsv
    ```
 
-   字体同理：`DARKLANDS_CHINESE_FONT`，或 `local/paths.json` 的 `chinesefont` 键。
+   字体同理：卡片字体 `DARKLANDS_CHINESE_FONT`（`local/paths.json` 的 `chinesefont` 键），
+   界面 8px 字体 `DARKLANDS_UI_CHINESE_FONT`（`uichinesefont` 键）。
 
 ---
 
@@ -147,6 +165,12 @@ dotnet build src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release
 ```
 
 需要 .NET 10 SDK。中文路径不引入额外依赖（`StbTrueTypeSharp` 是上游已有的 NuGet 包）。
+
+单文件发布（自带 .NET 运行时，目标机器无需安装 .NET）：
+
+```
+dotnet publish src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o artifacts/publish-win-x64
+```
 
 ---
 
@@ -170,12 +194,13 @@ dotnet build src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release
 
 ### 已知问题
 
-1. **未经人工审校**（最主要）。7,731 条全部为 Qwen-MT 机器翻译，术语、文风、代词一致性均未校。
+1. **未经全面实测**（最主要）。译文为人工翻译，但卡片换行、选项列表、谜题旋钮、`$he/$his`
+   代词替换尚未逐项实测。
 2. **图片内嵌文字未翻译**。卡片框是 4 张固定位置图片拼成的，图上的文字需要 HD 包（路线 C），
    本 fork 未实现。
-3. **代码内硬编码字符串未翻译**（853 条 / 4,309 词）。
-4. **选项列表、谜题旋钮、`$he/$his` 代词替换尚未实测**。
-5. **卡片容量**：可用高度 194px，中文容量约 18 列 × 13 行 = 234 字/屏。
+3. **部分代码内硬编码字符串未翻译**。商店、交易、拾取、祈祷等界面已改为模板 + 查表，
+   其余硬编码字符串（开发控制台、启动器等）仍为英文。
+4. **卡片容量**：可用高度 194px，中文容量约 18 列 × 13 行 = 234 字/屏。
    3,756 张卡中仅 15 张（0.4%）超 194px，且原版自己就溢出。
 
 ---
@@ -187,18 +212,25 @@ dotnet build src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release
 （`CjkFont.cs`、`TranslationTable.cs`、`TextDecoder.cs`、`TextPainter.cs` 等）与译文表
 `translations_zh.tsv` 同属该许可范围。
 
-随附的运行时字体 `ChineseFont.ttf`（文泉驿点阵宋体 12px）使用
-**GNU GPL v2 + 字体嵌入例外条款**（GPL-2.0 with font embedding exception）：
+随附的运行时字体有两个：
 
-* **版权**：Copyright (C) 2004-2010 The WenQuanYi Project Board of Trustees and Qianqian Fang，
-  基于 firefly 的点阵字体作品
-* **完整许可文本与出处**：`src/Darklands.Presentation/Resources/WenQuanYi-LICENSE.txt`
-* **上游**：https://wenq.org/wqy2/index.cgi?BitmapSong
-* 该 TTF 由 AmusementClub 从 v1.0.0-RC1 (Hero) 的 PCF 点阵字体转换而来
+* `ChineseFont.ttf`（文泉驿点阵宋体 12px，卡片正文）使用
+  **GNU GPL v2 + 字体嵌入例外条款**（GPL-2.0 with font embedding exception）：
+  * **版权**：Copyright (C) 2004-2010 The WenQuanYi Project Board of Trustees and Qianqian Fang，
+    基于 firefly 的点阵字体作品
+  * **完整许可文本与出处**：`src/Darklands.Presentation/Resources/WenQuanYi-LICENSE.txt`
+  * **上游**：https://wenq.org/wqy2/index.cgi?BitmapSong
+  * 该 TTF 由 AmusementClub 从 v1.0.0-RC1 (Hero) 的 PCF 点阵字体转换而来
+* `ChineseUiFont.ttf`（Fusion Pixel 8px 等宽，商店等 UI 行）使用
+  **SIL Open Font License 1.1**：
+  * **版权**：Copyright (c) 2022, TakWolf (https://takwolf.com)
+  * **完整许可文本**：`src/Darklands.Presentation/Resources/FusionPixel-LICENSE-OFL.txt`
+  * **上游**：https://github.com/TakWolf/fusion-pixel-font
 
-字体以托管资源形式内嵌于程序集（`Darklands.Presentation.Resources.ChineseFont.ttf`），但可在运行时
-通过 `DARKLANDS_CHINESE_FONT` 或 `local/paths.json` 的 `chinesefont` 键替换为其他 TTF。
-字体文件本身的 GPL-2.0 + 嵌入例外许可不受影响。
+字体以托管资源形式内嵌于程序集（`Darklands.Presentation.Resources.ChineseFont.ttf` /
+`Darklands.Presentation.Resources.ChineseUiFont.ttf`），但可在运行时通过
+`DARKLANDS_CHINESE_FONT` / `DARKLANDS_UI_CHINESE_FONT` 或 `local/paths.json` 的
+`chinesefont` / `uichinesefont` 键替换为其他 TTF。字体文件本身的许可不受影响。
 
 ---
 

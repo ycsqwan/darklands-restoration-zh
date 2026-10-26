@@ -110,11 +110,22 @@ conversion of the v1.0.0-RC1 (Hero) PCF bitmap font made by AmusementClub
 (https://wenq.org/wqy2/index.cgi?BitmapSong,
 https://github.com/AmusementClub/WenQuanYi-Bitmap-Song-TTF). It is embedded in the assembly as
 `Darklands.Presentation.Resources.ChineseFont.ttf` and is the face the Chinese text path rasterises
-with StbTrueTypeSharp; it can be replaced at run time with `DARKLANDS_CHINESE_FONT` or the
-`chinesefont` key of `local/paths.json`. Copyright (C) 2004-2010 The WenQuanYi Project Board of
-Trustees and Qianqian Fang, based on firefly's bitmap font; licensed GNU General Public License v2
-with a font embedding exception. The full licence text is in
-`src/Darklands.Presentation/Resources/WenQuanYi-LICENSE.txt`.
+the card text with StbTrueTypeSharp (the 8 px user-interface rows use Fusion Pixel, below); it can be
+replaced at run time with `DARKLANDS_CHINESE_FONT` or the `chinesefont` key of `local/paths.json`.
+Copyright (C) 2004-2010 The WenQuanYi Project Board of Trustees and Qianqian Fang, based on firefly's
+bitmap font; licensed GNU General Public License v2 with a font embedding exception. The full licence
+text is in `src/Darklands.Presentation/Resources/WenQuanYi-LICENSE.txt`.
+
+## Fusion Pixel Font (Chinese UI text)
+
+`src/Darklands.Presentation/Resources/ChineseUiFont.ttf` is Fusion Pixel Font 8 px monospaced
+(Simplified Chinese), from TakWolf's fusion-pixel-font (https://github.com/TakWolf/fusion-pixel-font).
+It is embedded in the assembly as `Darklands.Presentation.Resources.ChineseUiFont.ttf` and is the
+face the Chinese text path uses for the 8 px user-interface rows (the shop, barter, loot and prayer
+screens); the card text keeps the 12 px WenQuanYi face above. It can be replaced at run time with
+`DARKLANDS_UI_CHINESE_FONT` or the `uichinesefont` key of `local/paths.json`. Copyright (c) 2022,
+TakWolf (https://takwolf.com); licensed SIL Open Font License, Version 1.1. The full licence text is
+in `src/Darklands.Presentation/Resources/FusionPixel-LICENSE-OFL.txt`.
 
 ## Original game data
 
