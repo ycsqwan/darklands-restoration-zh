@@ -124,6 +124,37 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 ---
 
+### 效果展示
+
+以下截图来自 v0.9.4 的 win-x64 单文件构建（`--scale` 窗口）。
+
+**卡片正文** —— 文泉驿 12px 点阵宋体。折行、避头标点、`$变量` 展开均已处理；
+底部时钟条的 `Prime` / `Hours` / `Days` 等仍是原版英文（属图片内嵌文字）。
+
+![卡片正文](docs/images/zh-card-text.png)
+
+**城镇选项** —— 卡片窗口内的选项列表，中文与原版混排的 `……` 前缀。
+
+![城镇选项](docs/images/zh-town-options.png)
+
+**室内对话** —— 酒馆内的叙述与人物对话（含 `$NamedOneName` 等变量展开）。
+
+![室内对话](docs/images/zh-dialogue.png)
+
+**商店界面** —— 商品名、品质、价格、重量、数量全部中文；行结构由模板 + 参数渲染。
+
+![商店界面](docs/images/zh-shop.png)
+
+**祈祷界面** —— 圣徒名、圣徒描述、圣日、状态栏均走翻译表。
+
+![祈祷界面](docs/images/zh-saint-prayer.png)
+
+**队伍面板** —— 队员名与所属圣徒名（竖版，原始比例较小）。
+
+![队伍面板](docs/images/zh-party.png)
+
+---
+
 ### 本轮进展
 
 - **66 条恒等占位修复**：早期的「结构性 run 恒等销账」机制误把 66 条真卡片文本（叙述 / 对话 /
