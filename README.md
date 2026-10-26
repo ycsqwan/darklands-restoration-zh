@@ -101,8 +101,9 @@ not licensed by it; you need your own copy of the game. Third-party components k
 本 fork 在 Restoration Project 之上加入**简体中文**。上游没有国际化支持，也没有 mod / 插件接口，
 所以 CJK 渲染路径是**源码树的一部分**，而不是外挂的插件。
 
-> ⚠️ **实验性构建（experimental）**：卡片文本覆盖率 **100%**，译文为**人工翻译**（机器翻译已弃用）。
-> 但卡片换行、选项列表、谜题旋钮、`$he/$his` 代词替换等**尚未全面实测**。
+> ⚠️ **实验性构建（experimental）**：卡片文本的可打印 run 已逐条进入翻译表（7,729 / 7,729，按静态扫描统计），
+> 译文为**人工翻译**（机器翻译已弃用）。但卡片换行、选项列表、谜题旋钮、`$he/$his` 代词替换等**尚未全面实测**，
+> 覆盖率数字也只反映静态文本，不代表运行时表现。
 > 欢迎试用与反馈，但请勿视作成品。详见[已知问题](#已知问题)。
 
 ---
@@ -111,7 +112,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 | 项目 | 状态 |
 | --- | --- |
-| 卡片 run 覆盖率 | **100.00%**（7,729 / 7,729） |
+| 卡片 run 覆盖率 | **7,729 / 7,729**（按出现次数的静态扫描，非运行时验证） |
 | 表条目 | **8,636 条**（8,564 条译文 + 72 条恒等占位） |
 | 表文件 | `translations_zh.tsv`，8,644 行 / 1,790,217 字节 |
 | 卡片字体 | 文泉驿点阵宋体 **12px**（WenQuanYi Bitmap Song） |
@@ -128,7 +129,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 以下截图来自 v0.9.4 的 win-x64 单文件构建（`--scale` 窗口）。
 
-**卡片正文** —— 文泉驿 12px 点阵宋体。折行、避头标点、`$变量` 展开均已处理；
+**卡片正文** —— 文泉驿 12px 点阵宋体。折行、避头标点与 `$变量` 展开都有专门处理；
 底部时钟条的 `Prime` / `Hours` / `Days` 等仍是原版英文（属图片内嵌文字）。
 
 ![卡片正文](docs/images/zh-card-text.png)
@@ -141,7 +142,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 ![室内对话](docs/images/zh-dialogue.png)
 
-**商店界面** —— 商品名、品质、价格、重量、数量全部中文；行结构由模板 + 参数渲染。
+**商店界面** —— 商品名、品质、价格、重量、数量均为中文；行结构由模板 + 参数渲染。
 
 ![商店界面](docs/images/zh-shop.png)
 
@@ -159,13 +160,13 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 - **66 条恒等占位修复**：早期的「结构性 run 恒等销账」机制误把 66 条真卡片文本（叙述 / 对话 /
   选项整句）写成 `英文→英文` 恒等条目，于是它们永远命中不了翻译表、游戏里一直是英文。
-  已全部人工译出。
+  这批已逐条人工译出。
 - **圣徒名与描述**：136 位圣徒的全名 / 短名与描述。
 - **商店 / 交易 / 拾取界面**：整行原来是一个 run，而价格、品质、重量、数量是运行时数字，
   整行永远不可能命中静态翻译表。改为**模板 + 参数**（`TranslationTable.Line`），
   行被拆成可译片段。
 - **祈祷界面**：状态、菜单、圣日、圣徒描述均走查表。
-- **卡片折行修复**（影响全部中文卡片文本）：每行吞 1 个字符、中文行退到行内最后一个空格断行、
+- **卡片折行修复**（影响中文卡片文本的折行）：每行吞 1 个字符、中文行退到行内最后一个空格断行、
   行首出现收尾标点。
 - **8px 界面字体**：商店等 UI 行改用 Fusion Pixel 8px 等宽；卡片正文的 12px 字体保持不变。
 
@@ -210,7 +211,7 @@ dotnet publish src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release -r wi
 * **接管点**：`TextDecoder.Decode` 与 `TextPainter`。ASCII（`< 0x80`）继续走原版位图字体，
   保持原版观感；`≥ 0x80` 且超出 Latin-1 的字符交给 `CjkFont`。
 * **翻译粒度**：卡片文本中连续的 `0x20–0x7F` 字节段（称为一个 run）作为查表 key。
-  控制码（`0x01–0x1F`）与颜色码（`0x80–0xFF`）是分隔符，**永不翻译**。
+  控制码（`0x01–0x1F`）与颜色码（`0x80–0xFF`）是分隔符，**不作为翻译 key**。
 * **表加载顺序**：`DARKLANDS_TRANSLATIONS` 环境变量 → `local/paths.json` 的 `translations` 键 →
   程序集内嵌资源。
 * **卡片文本**在 `TextVariables.Expand` **之前**翻译（`CardScreen.cs:232`），
