@@ -174,9 +174,9 @@ same data; the dormant branches (`// DORMANT:`, kept but unreachable) are listed
 - **U-a4c9e9** `uncertain` - `src/Darklands.Presentation/BuySellPage.cs:55` `BuySellPage.DrawParty`  
   original: `R032+0x0000` (1462:0000, draft), `R035+0x0000` (1462:0000, matched), `R040+0x01C8` (1462:01C8, draft)  
   why: argument 0x100's meaning is not modelled
-- **U-dc1ff1** `uncertain` - `src/Darklands.Presentation/BuySellPage.cs:77` `BuySellPage.Text`  
+- **U-dc1ff1** `uncertain` - `src/Darklands.Presentation/BuySellPage.cs:78` `BuySellPage.Text`  
   original: `root 047C:055A` (047C:055A, draft)  
-  why: glyph clipping at the window's right edge is not reproduced (long lines are cut by the screen edge only).
+  why: glyph clipping at the window's right edge is not reproduced (long lines are cut by the screen edge only). The text goes through TextPainter.Draw, so the colour codes keep their meaning and the Chinese translation of a printable run (TranslationTable) is drawn with the TrueType face; the driver's own loop read the bytes one at a time and could not see a multi-byte character.
 - **U-df0837** `uncertain` - `src/Darklands.Presentation/CharacterCreationScreen.cs:92` `CharacterCreationScreen.FigureImages`  
   original: `R037+0x0000` (1462:0000, draft), `R037+0x0444` (1462:0444, draft), `R037+0x0390` (1462:0390, draft) +5 more  
   why: DOS lists the files in directory order; here each group is in name order (F01, F60, then A00, then C00).
@@ -189,7 +189,7 @@ same data; the dormant branches (`// DORMANT:`, kept but unreachable) are listed
 - **U-96d507** `uncertain` - `src/Darklands.Presentation/GameScreens2.cs:48` `GameScreens2.int`  
   original: `R029+0x2204` (0E76:2204, draft), `R029+0x222A` (0E76:222A, draft)  
   why: which keys the original's menu_bar_run takes inside the sheet is not traced; only the Alt keys are passed.
-- **U-fccc5f** `uncertain` - `src/Darklands.Presentation/GameUi.cs:485` `GameUi.Wait`  
+- **U-fccc5f** `uncertain` - `src/Darklands.Presentation/GameUi.cs:531` `GameUi.Wait`  
   original: `root 0410:0302` (0410:0302, asm), `R030+0x3096` (1767:0046, matched)  
   why: a clock() tick as one millisecond (MSC 6 CLK_TCK = 1000); the 0410 timer ticks have another unit, see MessageBox and Cinematics.
 - **U-797153** `uncertain` - `src/Darklands.Presentation/MarchingOrderScreen.cs:20` `MarchingOrderScreen`  
@@ -213,10 +213,10 @@ same data; the dormant branches (`// DORMANT:`, kept but unreachable) are listed
 - **U-e8f4e0** `uncertain` - `src/Darklands.Presentation/PartyRosterScreen.cs:212` `PartyRosterScreen.ResultOfDriver`  
   original: `R038+0x02F8` (1462:02F8, draft)  
   why: the driver's AX is taken never to be 0x11B (it would end the screen).
-- **U-9ecd08** `uncertain` - `src/Darklands.Presentation/SaintPrayerScreen.cs:336` `SaintPrayerScreen.DrawInfo`  
+- **U-9ecd08** `uncertain` - `src/Darklands.Presentation/SaintPrayerScreen.cs:363` `SaintPrayerScreen.DrawInfo`  
   original: `R034+0x0BC4` (1462:0BC4, matched)  
   why: the text routine root 0265:0134 is assembly only: the name is taken as centred in its 154-pixel column with the capital at y 8 (positions from a capture of the original), the description as wrapped in 156 pixels from (0x94, 0x25).
-- **U-a84a42** `uncertain` - `src/Darklands.Presentation/SaintPrayerScreen.cs:393` `SaintPrayerScreen.OpenMemberList`  
+- **U-a84a42** `uncertain` - `src/Darklands.Presentation/SaintPrayerScreen.cs:437` `SaintPrayerScreen.OpenMemberList`  
   original: `R034+0x0E04` (1462:0E04, matched), `R034+0x0D08` (1462:0D08, matched)  
   why: the names are drawn by the text routine (assembly only) in a 52-pixel column; here each full name is cut to fit that width on its row.
 - **U-ef55b2** `uncertain` - `src/Darklands.Presentation/StartUp.cs:254` `StartUp.GameStart`  
