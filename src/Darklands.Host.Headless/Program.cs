@@ -294,21 +294,12 @@ if (steps.Count > 0 && steps[0].StartsWith("saint:", StringComparison.Ordinal))
     ui.Canvas.Fill(0, 0, Canvas.Width, Canvas.Height, Palette.Blank);
     panel.Draw(ui.Canvas, state.Party);
     var mode = spec.Length > 2 ? Darklands.Core.Rules.PrayerMode.ForParty : Darklands.Core.Rules.PrayerMode.ForMember;
-    try
-    {
-        var outcome = new SaintPrayerScreen(ui, panel).Pray(state, spec.Length > 1 ? int.Parse(spec[1], System.Globalization.CultureInfo.InvariantCulture) : 0,
-            int.Parse(spec[0], System.Globalization.CultureInfo.InvariantCulture), mode, Darklands.Core.Rules.SaintEffects.Instance);
-        Console.WriteLine($"prayer: {outcome}");
-        ui.Present();
-        while (true)
-        {
-            ui.WaitForAction();
-        }
-    }
-    catch (QuitGameException)
-    {
-    }
-    Console.WriteLine($"{host.ShotsTaken} screenshot(s) in {output}");
+    // Pray draws the screen and then waits for a key; the dry queue makes that wait a quit, and Present throws
+    // before it keeps the frame, so the screen is drawn through Preview and the canvas written here.
+    new SaintPrayerScreen(ui, panel).Preview(state, spec.Length > 1 ? int.Parse(spec[1], System.Globalization.CultureInfo.InvariantCulture) : 0,
+        int.Parse(spec[0], System.Globalization.CultureInfo.InvariantCulture), mode);
+    ui.SaveScreenshot(Path.Combine(output, "saint.png"));
+    Console.WriteLine($"1 screenshot(s) in {output}");
     return 0;
 }
 // load:<file> (debug) starts the game with that saved game of the saves folder (a game saved in a battle resumes the battle).

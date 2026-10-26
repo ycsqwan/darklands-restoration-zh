@@ -213,6 +213,7 @@ public sealed class CardTextLayout(TextPainter painter)
                 cursor--;
                 count--;
             }
+            var overflowed = used >= lineWidth;
             if (At(cursor) == '\n' || At(cursor) == 0)
             {
                 resetAtLineEnd = true;
@@ -223,16 +224,31 @@ public sealed class CardTextLayout(TextPainter painter)
             // opportunity at all keeps its width-limited break: Chinese has no spaces, so walking
             // back to the line's start would throw the whole line away.
             var breakCursor = cursor;
-            while (At(breakCursor) is not ' ' and not 0 and not '\n' and not '-' &&
+            // Walking back to a space is only needed when the column edge falls inside a word. Chinese breaks
+            // between any two characters, so a line that ends in Chinese keeps its width-limited break: walking
+            // back to the last space of such a line leaves it far short of the column (a line of one word).
+            var cjkEdge = At(cursor) > 0xFF || (cursor > lineStart && At(cursor - 1) > 0xFF);
+            while (!cjkEdge && At(breakCursor) is not ' ' and not 0 and not '\n' and not '-' &&
                    start < breakCursor && breakCursor > lineStart)
             {
                 breakCursor--;
             }
-            if (breakCursor > lineStart || At(breakCursor) == ' ' || At(breakCursor) == '-')
+            // The walk-back only counts when it actually found a break opportunity; with the cursor left on the
+            // first character that did not fit, there is nothing to step over and the next line starts there.
+            var broke = !cjkEdge && (breakCursor > lineStart || At(breakCursor) == ' ' || At(breakCursor) == '-');
+            if (broke)
             {
                 cursor = breakCursor;
             }
             count = cursor - lineStart;
+
+            // Chinese sets no closing punctuation at the start of a line: the break moves back over it, so
+            // the line ends one character sooner and the punctuation follows a character on the next one.
+            while (!broke && overflowed && count > 1 && IsNoStart(At(cursor)))
+            {
+                cursor--;
+                count--;
+            }
 
             // Nothing but spaces left on this line: the line ends here.
             var rest = cursor;
@@ -275,7 +291,14 @@ public sealed class CardTextLayout(TextPainter painter)
                 width++;   // the original widens the column by a pixel for every empty segment
             }
 
-            cursor++;
+            // A line that broke at a space sits on that space and a line that ended at a newline sits on
+            // the newline: both are stepped over. A line that broke at the column edge already sits on the
+            // first character that did not fit, which is where the next line starts, so stepping over it
+            // would lose that character (one per line of a text without spaces, i.e. every Chinese line).
+            if (broke || !overflowed)
+            {
+                cursor++;
+            }
             lineStart = cursor;
             if (indentPending)
             {
@@ -319,6 +342,11 @@ public sealed class CardTextLayout(TextPainter painter)
     // C: char_width (drv+0x11A9) gives a code outside the font's first..last range no width: fonts 1 and 2 start at 0x1F, so in the card
     //   window's font the control codes take no room; font 0 starts at code 0 and gives them the widths of its table. checked against asm
     private static bool IsOptionMarker(int c) => c is PlainOption or ItemOption or SaintOption or BattleOption;
+
+    /// <summary>The characters a Chinese line may not begin with (closing punctuation and the like).</summary>
+    private static bool IsNoStart(int c) =>
+        c is 0x3001 or 0x3002 or 0xFF0C or 0xFF1B or 0xFF1A or 0xFF1F or 0xFF01 or 0xFF09 or 0x300D
+            or 0x300F or 0x3011 or 0x300B or 0x3009 or 0x2026 or 0xFF5D or 0x3015 or 0x2019 or 0x201D;
 
     private static bool IsControl(int c) =>
         c is Paragraph or PlainOption or ItemOption or SaintOption or BattleOption or Indent or 0x0D

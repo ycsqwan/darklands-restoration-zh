@@ -54,7 +54,8 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
     private const int BoxRow = 9;
 
     private readonly Canvas _canvas = ui.Canvas;
-    private readonly TextPainter _text = new(ui.Assets.Font(2));
+    // The screen is laid out on font 2 (8 px), so its Chinese is the 8 px face, not the card font's 15 px em.
+    private readonly TextPainter _text = new(ui.Assets.Font(2)) { Cjk = ui.UiChineseFont ?? ui.ChineseFont };
     private readonly MessageBox _message = new(ui);
     private Pic? _background;
     private SavedRegion? _box;
@@ -94,7 +95,9 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
         //   saint_pray_party says nothing. The rolls and the favor spent are the same (SaintPrayer.Pray).
         //   The message is shown from inside SaintPrayer.Pray, at the original's place between the roll and the help.
         var success = prayer.Pray(who, effects,
-            mode == PrayerMode.ForMember ? ok => _message.Show(ok ? "Saint Call Successful" : "Saint Call Fails", MessageMilliseconds) : null);
+            mode == PrayerMode.ForMember
+                ? ok => _message.Show(TranslationTable.Name(ok ? "Saint Call Successful" : "Saint Call Fails"), MessageMilliseconds)
+                : null);
         Leave(saved, state);
         PlayBack(mode, music);
         return prayer.Outcome(success);
@@ -263,7 +266,28 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
         DrawStatus(prayer);
         DrawMenu(prayer);
         DrawInfo(prayer.Saint);
-        ui.Present();
+        Present();
+    }
+
+    /// <summary>
+    /// Draws the screen once for a saint and returns: the headless host's "saint" step, which has no input to
+    /// wait for (its dry queue makes the first <see cref="GameUi.Present"/> throw the quit).
+    /// </summary>
+    public void Preview(GameState state, int member, int saint, PrayerMode mode)
+    {
+        _preview = true;
+        DrawAll(new SaintPrayer(state, member, saint, mode));
+    }
+
+    // True while Preview draws: the frame is kept on the canvas instead of being shown (and read as a quit).
+    private bool _preview;
+
+    private void Present()
+    {
+        if (!_preview)
+        {
+            ui.Present();
+        }
     }
 
     /// <summary>The saint's picture: sntback&lt;class&gt;.pic (classes 10..13 use 0, others 1).</summary>
@@ -307,9 +331,10 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
     {
         CloseMemberList();
         CopyBackground(0x9F, 0x93, 0x97, 8);
-        _text.Draw(_canvas, 0xDB, 0x93, $"DF Remaining: {prayer.FavorRemaining:00}", TextColor);
-        _text.Draw(_canvas, 0x9F, 0x93, $"Success: {prayer.ShownChance}", TextColor);
-        ui.Present();
+        // The two numbers are the prayer's, so each label is a template the Chinese side can put them into.
+        _text.Draw(_canvas, 0xDB, 0x93, TranslationTable.Line("DF Remaining: $0", $"{prayer.FavorRemaining:00}"), TextColor);
+        _text.Draw(_canvas, 0x9F, 0x93, TranslationTable.Line("Success: $0", $"{prayer.ShownChance}"), TextColor);
+        Present();
     }
 
     /// <summary>The four lines, their key letter in colour 12; the prayer line grey while the chance is 0.</summary>
@@ -318,17 +343,19 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
     //   letter in colour 12, the rest in the window colour, as "\x8e+\x8f" in the battle panel. checked against asm
     private void DrawMenu(SaintPrayer prayer)
     {
-        DrawLine(MenuY, " M", "ore divine favor is spent", TextColor);
-        DrawLine(MenuY + MenuStep, " L", "ess divine favor is spent", TextColor);
-        DrawLine(MenuY + 2 * MenuStep, " P", prayer.ChoosesMember ? "ray now for ..." : "ray now for the entire party",
+        DrawLine(MenuY, "M", "More divine favor is spent", TextColor);
+        DrawLine(MenuY + MenuStep, "L", "Less divine favor is spent", TextColor);
+        DrawLine(MenuY + 2 * MenuStep, "P", prayer.ChoosesMember ? "Pray now for ..." : "Pray now for the entire party",
             prayer.CanPray ? TextColor : DisabledColor);
-        DrawLine(MenuY + 3 * MenuStep, " D", "on't pray right now", TextColor);
+        DrawLine(MenuY + 3 * MenuStep, "D", "Don't pray right now", TextColor);
     }
 
-    private void DrawLine(int y, string key, string rest, byte color)
+    // The original splits each line after the key letter ("\214 M\377ore divine favor is spent"); the letter has
+    // no place inside a Chinese line, so it is drawn first and the whole line follows it through the table.
+    private void DrawLine(int y, string key, string english, byte color)
     {
         var x = _text.Draw(_canvas, MenuX, y, key, 12);
-        _text.Draw(_canvas, x, y, rest, color);
+        _text.Draw(_canvas, x, y, " " + TranslationTable.Name(english), color);
     }
 
     /// <summary>The saint's name with an illuminated capital, the feast day, the description.</summary>
@@ -339,15 +366,24 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
     private void DrawInfo(int saint)
     {
         DrawTitle(SaintName(saint));
-        _text.Draw(_canvas, 0x4C, 0xAD, "Saint Day", TextColor);
-        _text.Draw(_canvas, 0x62, 0xB5, "is", TextColor);
+        // The feast day is one line here: the original's three rows ("Saint Day" / "is" / the date) only fit the
+        // English word order, and "is" is not a key the card texts have.
         var day = SaintTable.Of(saint).FeastDay;
-        var date = $"{TextVariables.MonthNames[Quests.MonthOf(day)]} {Quests.DayOfMonth(day)}";
-        var width = Math.Min(_text.Measure(date), 50);
-        _text.Draw(_canvas, (50 - width) / 2 + 75, 0xBD, date, TextColor);
-        new CardTextLayout(_text).Draw(_canvas, TextPainter.Encode(ui.Assets.SaintDescription(saint)), 0x94, 0x25, 0x9C,
+        var date = TranslationTable.Line("Saint Day is $0 $1", MonthName(Quests.MonthOf(day)), $"{Quests.DayOfMonth(day)}");
+        _text.Draw(_canvas, 0x4C, 0xAD, date, TextColor);
+        // The description is card text: one run of printable bytes, so the table takes it whole.
+        var description = TextPainter.Encode(ui.Assets.SaintDescription(saint));
+        if (TranslationTable.Current is { } table)
+        {
+            description = table.Translate(description);
+        }
+        new CardTextLayout(_text).Draw(_canvas, description, 0x94, 0x25, 0x9C,
             new CardTextLayout.Settings { Color = TextColor });
     }
+
+    /// <summary>The month's name through the table ("一月" for January), or "" outside the year.</summary>
+    private static string MonthName(int month) =>
+        month >= 0 && month < TextVariables.MonthNames.Length ? TranslationTable.Name(TextVariables.MonthNames[month]) : "";
 
     /// <summary>The saint's full name (saint_names R136+0xF16E, from DARKLAND.LST).</summary>
     private string SaintName(int saint)
@@ -358,10 +394,18 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
 
     private IReadOnlyList<Content.Formats.World.DarklandSaintName>? _names;
 
-    private void DrawTitle(string name)
+    private void DrawTitle(string english)
     {
+        var name = TranslationTable.Name(english);
         if (name.Length == 0)
         {
+            return;
+        }
+        // A Chinese name has no illuminated capital: the whole name is centred in the column at the text row.
+        if (name[0] > 0xFF)
+        {
+            var chinese = _text.Measure(name);
+            _text.Draw(_canvas, 0x94 + Math.Max(0, (0x9A - chinese) / 2), 0x11, name, TextColor);
             return;
         }
         var cap = DropCaps.Get(ui.Assets, (byte)name[0]);
@@ -403,7 +447,7 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
             _text.Draw(_canvas, 0xFF, y, name, TextColor);
             y += BoxRow;
         }
-        ui.Present();
+        Present();
     }
 
     private void CloseMemberList()
@@ -412,7 +456,7 @@ public sealed class SaintPrayerScreen(GameUi ui, PartyPanel panel)
         {
             _canvas.Restore(_box);
             _box = null;
-            ui.Present();
+            Present();
         }
     }
 

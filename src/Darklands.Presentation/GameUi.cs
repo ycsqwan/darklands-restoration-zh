@@ -110,6 +110,8 @@ public sealed class GameUi
     /// </summary>
     // Read on first use: a build without the resource (or without the file named by local/paths.json "uichinesefont")
     // falls back to the card font, which overlaps but still reads.
+    // The 8 px face's ink is 8 px tall (y -1..6 around its baseline), so a baseline of 6 puts it on the same rows as
+    // the bitmap fonts' own 8 px glyphs (the 6 px font of the shop rows and the 8 px font of the prayer screen alike).
     public CjkFont? UiChineseFont => _uiChinese ??= CjkFont.LoadEmbedded(
         LocalPaths.Get("uichinesefont", "DARKLANDS_UI_CHINESE_FONT"),
         UiChineseFontEm,
@@ -118,13 +120,13 @@ public sealed class GameUi
         Assets.Font(1).CharacterHeight,
         "Darklands.Presentation.Resources.ChineseUiFont.ttf");
 
+    private CjkFont? _uiChinese;
+
     /// <summary>The em square in pixels the UI Chinese font is rasterised at (8: Fusion Pixel's grid).</summary>
     public static int UiChineseFontEm => 8;
 
     /// <summary>The distance between two baselines of the UI Chinese text (8 px: the rows the screens lay text out on).</summary>
     public static int UiChineseFontLineHeight => 8;
-
-    private CjkFont? _uiChinese;
 
     public TextPainter Text => _text ??= new TextPainter(Assets.Font(1)) { Cjk = UiChineseFont ?? ChineseFont };
 
