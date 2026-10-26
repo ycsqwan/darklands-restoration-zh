@@ -10,7 +10,7 @@ using Darklands.Simulation;
 /// <summary>Debug: opens one of the trading screens on a Quickstart game, to look at it without playing to it.</summary>
 internal static class ScreenPreview
 {
-    public static void Run(IHost host, GameFiles files, string screen, uint seed)
+    public static void Run(IHost host, GameFiles files, string screen, uint seed, string output)
     {
         var world = WorldData.Load(files);
         var ui = new GameUi(host, new GameAssets(files));
@@ -46,6 +46,10 @@ internal static class ScreenPreview
         catch (QuitGameException)
         {
         }
+        // The trading screens draw and then wait for a key without presenting, so the last frame they drew is still
+        // on the canvas when they return: save it straight from there (Present would see the dry input queue as a
+        // quit request).
+        ui.SaveScreenshot(Path.Combine(output, screen + ".png"));
     }
 
     private sealed class NoOtherScreens : IGameScreens

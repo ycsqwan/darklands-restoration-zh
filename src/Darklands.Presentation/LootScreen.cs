@@ -4,6 +4,7 @@ using Darklands.Core.Characters;
 using Darklands.Core.Economy;
 using Darklands.Core.Rules;
 using Darklands.Platform;
+using Darklands.Presentation.Graphics;
 
 namespace Darklands.Presentation;
 
@@ -383,7 +384,7 @@ public sealed class LootScreen
         _page.Text(0x50, 0x23, PutLine, BuySellPage.Faded);
         DrawMenuTail();
         _page.Text(0x6B, 0x45, "The loot contains...", BuySellPage.Ink);
-        _page.Text(0x77, 0x83, $"{Party.Slot(Member).ShortName} currently has...", BuySellPage.Ink);
+        _page.Text(0x77, 0x83, TranslationTable.Line("$0 currently has...", Party.Slot(Member).ShortName), BuySellPage.Ink);
         var pack = PackOf(Member);
         for (var i = 0; i < 4 && i < pack.Count; i++)
         {
@@ -409,7 +410,7 @@ public sealed class LootScreen
         DrawMenuTail();
         // C: the redraw prints this heading at x 0x57, the first drawing at 0x6B.
         _page.Text(0x57, 0x45, "The loot contains...", BuySellPage.Ink);
-        _page.Text(0x77, 0x83, $"{Party.Slot(Member).ShortName} has...", BuySellPage.Ink);
+        _page.Text(0x77, 0x83, TranslationTable.Line("$0 has...", Party.Slot(Member).ShortName), BuySellPage.Ink);
         var pack = PackOf(Member);
         for (var i = _packTop[Member]; i < _packTop[Member] + 4 && i < pack.Count; i++)
         {
@@ -458,11 +459,14 @@ public sealed class LootScreen
     }
 
     private string CashLine() =>
-        Invariant($"The party finds {_cash.Florins}fl, {_cash.Groschen}gr, {_cash.Pfennigs}pf in cash.");
+        TranslationTable.Line("The party finds $0fl, $1gr, $2pf in cash.",
+            Invariant($"{_cash.Florins}"), Invariant($"{_cash.Groschen}"), Invariant($"{_cash.Pfennigs}"));
 
     /// <summary>"name  (%3d) %2d-Qual".</summary>
     private string ItemLine(ItemStack stack) =>
-        Invariant($"{_state.Item(stack.Code & 0xFFF).Name}  ({stack.Count,3}) {stack.Quality,2}-Qual");
+        TranslationTable.Line("$0  ($1) $2$3",
+            TranslationTable.Name(_state.Item(stack.Code & 0xFFF).Name),
+            Invariant($"{stack.Count,3}"), Invariant($"{stack.Quality,2}"), TranslationTable.Name("-Qual"));
 
     private static string Invariant(FormattableString text) => text.ToString(CultureInfo.InvariantCulture);
 }

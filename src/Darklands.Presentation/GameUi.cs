@@ -103,7 +103,30 @@ public sealed class GameUi
 
     private CjkFont? _chinese;
 
-    public TextPainter Text => _text ??= new TextPainter(Assets.Font(1)) { Cjk = ChineseFont };
+    /// <summary>
+    /// The font of the 8 px screens' Chinese: the UI text is laid out on 6..8 px rows (the shop's rows are 8 px
+    /// apart), so the card font's 15 px em would overlap. Fusion Pixel 8 px has unitsPerEm 800 with the same
+    /// ascent..descent span, so an 8 px em puts its outlines back on whole pixels, and its glyphs are 8 x 7 px.
+    /// </summary>
+    // Read on first use: a build without the resource (or without the file named by local/paths.json "uichinesefont")
+    // falls back to the card font, which overlaps but still reads.
+    public CjkFont? UiChineseFont => _uiChinese ??= CjkFont.LoadEmbedded(
+        LocalPaths.Get("uichinesefont", "DARKLANDS_UI_CHINESE_FONT"),
+        UiChineseFontEm,
+        UiChineseFontLineHeight,
+        message => Trace?.Invoke(message),
+        Assets.Font(1).CharacterHeight,
+        "Darklands.Presentation.Resources.ChineseUiFont.ttf");
+
+    /// <summary>The em square in pixels the UI Chinese font is rasterised at (8: Fusion Pixel's grid).</summary>
+    public static int UiChineseFontEm => 8;
+
+    /// <summary>The distance between two baselines of the UI Chinese text (8 px: the rows the screens lay text out on).</summary>
+    public static int UiChineseFontLineHeight => 8;
+
+    private CjkFont? _uiChinese;
+
+    public TextPainter Text => _text ??= new TextPainter(Assets.Font(1)) { Cjk = UiChineseFont ?? ChineseFont };
 
     private TextPainter? _text;
 

@@ -7736,3 +7736,751 @@ you'd be glad to have his help.	你乐得有其相助。
 you've come to the wrong place, then leave.	来错去处，遂离。
 See figure 0.	见图 0。
 character you have known.	你已认识的角色。
+Hand Axe	手斧
+Hnd Axe	手斧
+Throwing Knife	飞刀
+ThrKnife	飞刀
+Two-hand Sword	双手剑
+2H Sword	双手剑
+Long Sword	长剑
+LngSword	长剑
+Falchion	弯刀
+Short Sword	短剑
+ShrSword	短剑
+Poniard	尖匕首
+Dagger	匕首
+Battle Axe	战斧
+Batl Axe	战斧
+Field Axe	野战斧
+Fld Axe	野战斧
+Great Hammer	巨锤
+Grt Hamr	巨锤
+Giant Cudgel	巨棍
+Grt Cudg	巨棍
+Maul	大锤
+Military Hammer	军用锤
+Mil Hamr	军用锤
+Mace	钉头锤
+Club	棍棒
+Two-hand Flail	双手链锤
+2H Flail	双手链锤
+Military Flail	军用链锤
+MilFlail	军用链锤
+Pike	长枪
+Halberd	戟
+Long Spear	长矛
+Lng Spr	长矛
+Short Spear	短矛
+Sht Spr	短矛
+Quarterstaff	长棍
+Qtr Stf	长棍
+Throwing Axe	飞斧
+Thr Axe	飞斧
+Javelin	标枪
+Dart	飞镖
+Composite Bow	复合弓
+Cmp Bow	复合弓
+Long Bow	长弓
+Lng Bow	长弓
+Short Bow	短弓
+Sht Bow	短弓
+Arbalest	重弩
+Arblst	重弩
+Crossbow	弩
+Crsbow	弩
+Iron Handgun	铁手铳
+Iron HG	铁手铳
+Brass Handgun	铜手铳
+Brass HG	铜手铳
+Arrow	箭
+Quarrel	弩矢
+Ball	弹丸
+V:Clothing	V:布衣
+V:Cloth	V:布衣
+V:Padded	V:软甲
+V:Leather	V:皮甲
+V:Lthr	V:皮甲
+V:Studded Lthr	V:铆钉皮甲
+V:StLthr	V:铆钉皮甲
+V:Cuirboulli	V:硬化皮甲
+V:Curbli	V:硬化皮甲
+V:Scale	V:鳞甲
+V:Chainmail	V:锁子甲
+V:Chain	V:锁子甲
+V:Brigandine	V:板链甲
+V:Brgdn	V:板链甲
+V:Plate Armor	V:板甲
+V:Plate	V:板甲
+L:Clothing	L:布衣
+L:Cloth	L:布衣
+L:Padded	L:软甲
+L:Leather	L:皮甲
+L:Lthr	L:皮甲
+L:Studded Lthr	L:铆钉皮甲
+L:StLthr	L:铆钉皮甲
+L:Cuirbouilli	L:硬化皮甲
+L:Curbli	L:硬化皮甲
+L:Scale	L:鳞甲
+L:Chainmail	L:锁子甲
+L:Chain	L:锁子甲
+L:Brigandine	L:板链甲
+L:Brgdn	L:板链甲
+L:Plate Armor	L:板甲
+L:Plate	L:板甲
+Small Shield	小盾
+SmlShield	小盾
+Medium Shield	中盾
+MdmShield	中盾
+Large Shield	大盾
+LrgShield	大盾
+Torch	火把
+Candle	蜡烛
+Rope	绳索
+Iron Spike	铁钉
+Spike	铁钉
+Lantern	灯笼
+Clock	钟表
+Grappling Hook	抓钩
+Grapple	抓钩
+Lockpick	撬锁工具
+Harp	竖琴
+Flute	长笛
+Superb Horse	良驹
+SpHorse	良驹
+Fast Horse	快马
+FsHorse	快马
+Average Horse	普通马
+AvHorse	普通马
+Pack Horse	驮马
+PkHorse	驮马
+Mule	骡子
+Pure Gold	纯金
+PureGold	纯金
+Manganes	锰
+Naptha	石脑油
+Marsh Vapor	沼气
+MarshVpr	沼气
+East. Black Bean	东方黑豆
+EastBean	东方黑豆
+Zincblende	闪锌矿
+Zincblde	闪锌矿
+Antimoni	锑
+Orpiment	雌黄
+White Cinnabar	白朱砂
+W Cinbar	白朱砂
+Solanaceae	茄科植物
+Solanace	茄科植物
+Aqua Regia	王水
+Aq Regia	王水
+Gum	树胶
+Mondragora	曼德拉草
+Mondragr	曼德拉草
+Alum	明矾
+Camomile	洋甘菊
+Nikel	镍
+Pitchblende	沥青铀矿
+Ptchblde	沥青铀矿
+Zinken	锌
+Brimstone	硫磺
+Brimstne	硫磺
+Choleric Base	胆汁基质
+CholBase	胆汁基质
+Phleqmatic Base	黏液基质
+PhlgBase	黏液基质
+Sanguine Base	多血基质
+SangBase	多血基质
+Melanc. Base	忧郁基质
+MelaBase	忧郁基质
+Noxious Aroma	毒气
+Nox Aroma	毒气
+Eyeburn	灼眼
+Black Cloud	黑云
+Black Cld	黑云
+Fleadust	跳蚤粉
+Eater Water	蚀水
+EaterWatr	蚀水
+Breath of Death	死亡之息
+BrthODth	死亡之息
+Sunburst	阳爆
+Thunderbolt	雷霆
+Thundrblt	雷霆
+Arabian Fire	阿拉伯火药
+ArabFire	阿拉伯火药
+Stone-tar	石焦油
+Deadly Blade	致命利刃
+DeadBlade	致命利刃
+Strongedge	利锋
+StrngEdge	利锋
+Great Power	巨力
+GrtPower	巨力
+Trueflight	真射
+TrueFlght	真射
+Hardarmor	坚甲
+HardArmor	坚甲
+Transformation	变形
+Transform	变形
+Truesight	真视
+TrueSight	真视
+New-wind	新风
+NewWind	新风
+Ironarm	铁臂
+Quickmove	疾行
+Essence o'Grace	优雅精华
+EssGrace	优雅精华
+Firewall	火墙
+Key	钥匙
+Letter of Credit	信用证
+LtrCredit	信用证
+Residency Permit	居留许可
+RsdncPrmt	居留许可
+Love Letters	情书
+LoveLettr	情书
+Cheap Copy	廉价抄本
+CheapCopy	廉价抄本
+Secret Ledger	秘密账簿
+ScrtLedgr	秘密账簿
+Confession	忏悔录
+Confessn	忏悔录
+Birth Record	出生记录
+BrthRecrd	出生记录
+Birth Confess.	出生忏悔
+BrthConf	出生忏悔
+Evil Medallion	邪徽
+Medallion	邪徽
+Treason Plan	叛国计划
+TreasnPln	叛国计划
+Counterfeits	伪币模
+CntrMolds	伪币模
+Prayerbook	祈祷书
+PrayerBk	祈祷书
+Illum. Gospel	彩绘福音书
+Gospel	彩绘福音书
+Hermit's Habit	隐士长袍
+Habit	隐士长袍
+History Scroll	历史卷轴
+History	历史卷轴
+Ancient Crown	古代王冠
+Crown	古代王冠
+Hyoscyamus	天仙子
+Hyoscms	天仙子
+Silver Mace	银钉头锤
+Slvr mace	银钉头锤
+Tarnhelm	隐形盔
+Sworn Statement	宣誓书
+Statement	宣誓书
+Debt Note	借据
+Quest Item	任务物品
+QuestItem	任务物品
+Globe with Fish	鱼形地球仪
+the Fish	鱼形地球仪
+Lantern of Light	光明之灯
+Magic Honey	魔法蜂蜜
+Honey	魔法蜂蜜
+Seed of Life	生命之种
+Lifeseed	生命之种
+Magic Balance	魔法天平
+Balance	魔法天平
+Sword of War	战争之剑
+WarSword	战争之剑
+Tusk of a Boar	野猪獠牙
+Tusk	野猪獠牙
+Wolfskin	狼皮
+Bone	骸骨
+Gold Cup	金杯
+Thorn of the Crown	王冠之刺
+the Thorn	王冠之刺
+S.Mary's Tears	圣玛丽之泪
+Mary'Tear	圣玛丽之泪
+S.Arnulf GreatSwrd	圣阿努尔夫巨剑
+Arn'2Hswd	圣阿努尔夫巨剑
+S.Catherine Pain	圣凯瑟琳之痛
+Cath'Pain	圣凯瑟琳之痛
+S.Olaf Battleaxe	圣奥拉夫战斧
+Olaf'Baxe	圣奥拉夫战斧
+S.George GreatSwrd	圣乔治巨剑
+Geo'2Hswd	圣乔治巨剑
+S.Dunstan Hammer	圣邓斯坦之锤
+Duns'Hamr	圣邓斯坦之锤
+Spar of S.Erasmus	圣伊拉斯谟之矛
+Eras'Club	圣伊拉斯谟之矛
+Spear of Longinus	朗基努斯之枪
+Long'LSpr	朗基努斯之枪
+Staff of S.Patrick	圣帕特里克之杖
+Patk'QStf	圣帕特里克之杖
+S.Hubert's Bow	圣休伯特之弓
+Hubt'SBow	圣休伯特之弓
+S.Edward's Ring	圣爱德华之戒
+Edwd'Ring	圣爱德华之戒
+S.Emygdius Finger	圣埃米迪乌斯之指
+Emyd'Fngr	圣埃米迪乌斯之指
+S.Gabriel's Horn	圣加百列之角
+Gabl'Horn	圣加百列之角
+S.Ita's Needle	圣伊塔之针
+Ita'Needl	圣伊塔之针
+S.Kessog Medallion	圣凯索格徽章
+Kesg'Medl	圣凯索格徽章
+S.Odo's Testament	圣奥多遗言
+Odo'Tstmt	圣奥多遗言
+S.Odilia's Oil	圣奥迪利亚之油
+Odila'Oil	圣奥迪利亚之油
+S.Raphael's Water	圣拉斐尔之水
+Raph'Watr	圣拉斐尔之水
+S.Swithbert's Foot	圣斯威特伯特之足
+Swth'Foot	圣斯威特伯特之足
+S.Willehad's Shoe	圣威利哈德之鞋
+Will'Shoe	圣威利哈德之鞋
+S.Thealeaus' Spoon	圣西劳斯之勺
+Tha'Spoon	圣西劳斯之勺
+St.Adrian	圣阿德里安
+St.Agatha	圣阿加莎
+St.Agnes	圣阿格尼丝
+St.Aidan	圣艾丹
+St.Albert the Great	大圣阿尔伯特
+St.Alcuin	圣阿尔昆
+St.Alexis	圣阿莱克西斯
+St.Andrew	圣安德烈
+St.Andrew the Tribune	圣安德烈（百夫长）
+St.Anthony	圣安东尼
+St.Anthony of Padua	圣帕多瓦的安东尼
+St.Arnulf	圣阿努尔夫
+St.Apollinarius	圣阿波利纳里斯
+St.Barbara	圣芭芭拉
+St.Bathildis	圣巴蒂尔德
+St.Boniface	圣博尼法斯
+St.Catherine	圣凯瑟琳
+St.Catherine of Siena	圣锡耶纳的凯瑟琳
+St.Cecilia	圣塞西莉亚
+St.Ceolwulf	圣塞尔武尔夫
+St.Charity	圣慈善
+St.Christina, Astonish.	圣克里斯蒂娜（惊愕者）
+St.Christopher	圣克里斯托弗
+St.Clare	圣克莱尔
+St.Clotilda	圣克洛蒂尔德
+St.Colman of Cloyne	圣克洛因的科尔曼
+St.Columba	圣科伦巴
+St.Cosmas	圣科斯马斯
+St.Crispin	圣克里斯平
+St.Cyprian	圣西普里安
+St.Damian	圣达米安
+St.David	圣大卫
+St.Denis	圣德尼
+St.Derfel Gadarn	圣德费尔·加达恩
+St.Devota	圣德沃塔
+St.Dismas	圣迪斯马斯
+St.Dominic	圣多米尼克
+St.Dorothy of Montau	圣蒙陶的多萝西
+St.Drogo	圣德罗戈
+St.Dunstan	圣邓斯坦
+St.Dymphna	圣丁姆芙娜
+St.Edward, Confessor	圣爱德华（忏悔者）
+St.Eligius	圣埃利吉乌斯
+St.Emydius	圣埃米迪乌斯
+St.Engelbert	圣恩格尔贝特
+St.Erasmus	圣伊拉斯谟
+St.Eric	圣埃里克
+St.Eustace	圣尤斯塔斯
+St.Felix of Nola	圣诺拉的费利克斯
+St.Finbar	圣芬巴尔
+St.Finnian	圣芬尼安
+St.Florian	圣弗洛里安
+St.Francis	圣方济各
+St.Gabriel	圣加百列
+St.Genevieve	圣热纳维耶芙
+St.George	圣乔治
+St.Gerlac	圣格拉赫
+St.Gertrude o'Nivelles	圣尼维勒的格特鲁德
+St.Giles	圣吉尔
+St.Giles of Portugal	圣葡萄牙的吉尔
+St.Godehard	圣戈德哈德
+St.Godfrey	圣戈弗雷
+St.Gottschalk	圣戈特沙尔克
+St.Gregory Thaumaturg.	圣格列高利（行奇迹者）
+St.Hedwig	圣海德薇
+St.Henry	圣亨利
+St.Heribert	圣赫里伯特
+St.Herve	圣埃尔韦
+St.Hildegard	圣希尔德加德
+St.Hubert	圣休伯特
+St.Illtyd	圣伊尔蒂德
+St.Isidore	圣伊西多尔
+St.Ita	圣伊塔
+St.James	圣雅各
+St.Januarius	圣雅努阿里乌斯
+St.John of Bridlington	圣布里德灵顿的约翰
+St.John Chrysostom	圣约翰（金口）
+St.John Climacus	圣约翰·克利马科斯
+St.John Nepolmuchen	圣约翰·涅波尔穆琴
+St.Joseph	圣约瑟
+St.Jude	圣犹达
+St.Julian, Hospitaler	圣朱利安（接待者）
+St.Kessog	圣凯索格
+St.Lasdislaus	圣拉斯迪斯劳斯
+St.Lawrence	圣劳伦斯
+St.Lazarus	圣拉撒路
+St.Longinius	圣朗吉努斯
+St.Lucy	圣露西
+St.Luke	圣路加
+St.Lutgardis	圣卢特加迪斯
+St.Margaret	圣玛格丽特
+St.Margaret of Cortona	圣科托纳的玛格丽特
+St.Mark	圣马可
+St.Martin of Tours	圣图尔的马丁
+St.Matthew	圣马太
+St.Maurice	圣莫里斯
+St.Michael	圣弥额尔
+St.Milburga	圣米尔布尔加
+St.Moses the Black	圣黑人摩西
+St.Nicholas	圣尼古拉
+St.Odilia	圣奥迪利亚
+St.Odo	圣奥多
+St.Olaf	圣奥拉夫
+St.Pantaleon	圣潘塔莱翁
+St.Patrick	圣帕特里克
+St.Paul	圣保禄
+St.Paul the Simple	圣保罗（单纯者）
+St.Perpetua	圣佩尔佩图阿
+St.Peter	圣伯多禄
+St.Peter of Atroa	圣阿特拉的彼得
+St.Polycarp	圣波利卡普
+St.Raphael	圣拉斐尔
+St.Raymond Penafort	圣雷蒙德·佩尼亚福特
+St.Raymond Lull	圣雷蒙德·卢尔
+St.Reinold	圣莱诺尔德
+St.Roch	圣罗克
+St.Sabas the Goth	圣西巴斯的哥特人
+St.Sebastian	圣塞巴斯蒂安
+St.Stanislaus	圣斯坦尼斯劳斯
+St.Stephen	圣斯德望
+St.Swithbert	圣斯威特伯特
+St.Tarachus	圣塔拉库斯
+St.Thalelaeus,Merciful	圣塔莱劳斯（仁慈者）
+St.Theodore Tiro	圣西奥多（提罗）
+St.Thomas the Apostle	圣多默（宗徒）
+St.Thomas Aquinas	圣托马斯·阿奎那
+St.Valentine	圣瓦伦丁
+St.Victor o'Marseilles	圣马赛的维克多
+St.Vitus	圣维图斯
+St.Wenceslaus	圣瓦茨拉夫
+St.Wilfrid	圣威尔弗里德
+St.Willehad	圣威利哈德
+St.Willebald	圣威勒巴尔德
+St.Williborord	圣威利博罗德
+St.Wolfgang	圣沃尔夫冈
+St.Zita	圣齐塔
+S.Adrian	圣阿德里安
+S.Agatha	圣阿加莎
+S.Agnes	圣阿格尼丝
+S.Aidan	圣艾丹
+S.Albert	大圣阿尔伯特
+S.Alcuin	圣阿尔昆
+S.Alexis	圣阿莱克西斯
+S.Andrew	圣安德烈
+S.Andrew Tr	圣安德烈（百夫长）
+S.Anthony	圣安东尼
+S.Anthny Pa	圣帕多瓦的安东尼
+S.Arnulf	圣阿努尔夫
+S.Apollnrs	圣阿波利纳里斯
+S.Barbara	圣芭芭拉
+S.Bathilds	圣巴蒂尔德
+S.Boniface	圣博尼法斯
+S.Catherine	圣凯瑟琳
+S.Cathrn Si	圣锡耶纳的凯瑟琳
+S.Cecilia	圣塞西莉亚
+S.Ceolwulf	圣塞尔武尔夫
+S.Charity	圣慈善
+S.Christina	圣克里斯蒂娜（惊愕者）
+S.Christphr	圣克里斯托弗
+S.Clare	圣克莱尔
+S.Clotilda	圣克洛蒂尔德
+S.Colman Cl	圣克洛因的科尔曼
+S.Columba	圣科伦巴
+S.Cosmas	圣科斯马斯
+S.Crispin	圣克里斯平
+S.Cyprian	圣西普里安
+S.Damian	圣达米安
+S.David	圣大卫
+S.Denis	圣德尼
+S.Derfel Ga	圣德费尔·加达恩
+S.Devota	圣德沃塔
+S.Dismas	圣迪斯马斯
+S.Dominic	圣多米尼克
+S.Dorthy Mn	圣蒙陶的多萝西
+S.Drogo	圣德罗戈
+S.Dunstan	圣邓斯坦
+S.Dymphna	圣丁姆芙娜
+S.Edward Cf	圣爱德华（忏悔者）
+S.Eligius	圣埃利吉乌斯
+S.Emydius	圣埃米迪乌斯
+S.Engelbert	圣恩格尔贝特
+S.Erasmus	圣伊拉斯谟
+S.Eric	圣埃里克
+S.Eustace	圣尤斯塔斯
+S.FelixNola	圣诺拉的费利克斯
+S.Finbar	圣芬巴尔
+S.Finnian	圣芬尼安
+S.Florian	圣弗洛里安
+S.Francis	圣方济各
+S.Gabriel	圣加百列
+S.Genevieve	圣热纳维耶芙
+S.George	圣乔治
+S.Gerlac	圣格拉赫
+S.Gertrd Ni	圣尼维勒的格特鲁德
+S.Giles	圣吉尔
+S.Giles Por	圣葡萄牙的吉尔
+S.Godehard	圣戈德哈德
+S.Godfrey	圣戈弗雷
+S.Gottschlk	圣戈特沙尔克
+S.Gregory T	圣格列高利（行奇迹者）
+S.Hedwig	圣海德薇
+S.Henry	圣亨利
+S.Heribert	圣赫里伯特
+S.Herve	圣埃尔韦
+S.Hildegard	圣希尔德加德
+S.Hubert	圣休伯特
+S.Illtyd	圣伊尔蒂德
+S.Isidore	圣伊西多尔
+S.Ita	圣伊塔
+S.James	圣雅各
+S.Januarius	圣雅努阿里乌斯
+S.John Bdgt	圣布里德灵顿的约翰
+S.John Chry	圣约翰（金口）
+S.John Clmc	圣约翰·克利马科斯
+S.John Nepl	圣约翰·涅波尔穆琴
+S.Joseph	圣约瑟
+S.Jude	圣犹达
+S.Julian	圣朱利安（接待者）
+S.Kessog	圣凯索格
+S.Lasdislaus	圣拉斯迪斯劳斯
+S.Lawrence	圣劳伦斯
+S.Lazarus	圣拉撒路
+S.Longinius	圣朗吉努斯
+S.Lucy	圣露西
+S.Luke	圣路加
+S.Lutgardis	圣卢特加迪斯
+S.Margaret	圣玛格丽特
+S.Margart C	圣科托纳的玛格丽特
+S.Mark	圣马可
+S.Martin Tr	圣图尔的马丁
+S.Matthew	圣马太
+S.Maurice	圣莫里斯
+S.Michael	圣弥额尔
+S.Milburga	圣米尔布尔加
+S.Moses Blk	圣黑人摩西
+S.Nicholas	圣尼古拉
+S.Odilia	圣奥迪利亚
+S.Odo	圣奥多
+S.Olaf	圣奥拉夫
+S.Pantaleon	圣潘塔莱翁
+S.Patrick	圣帕特里克
+S.Paul	圣保禄
+S.Paul Smpl	圣保罗（单纯者）
+S.Perpetua	圣佩尔佩图阿
+S.Peter	圣伯多禄
+S.Peter Atr	圣阿特拉的彼得
+S.Polycarp	圣波利卡普
+S.Raphael	圣拉斐尔
+S.Raymnd Pf	圣雷蒙德·佩尼亚福特
+S.Raymnd Lu	圣雷蒙德·卢尔
+S.Reinold	圣莱诺尔德
+S.Roch	圣罗克
+S.Sabas Gth	圣西巴斯的哥特人
+S.Sebastian	圣塞巴斯蒂安
+S.Stanslaus	圣斯坦尼斯劳斯
+S.Stephen	圣斯德望
+S.Swithbert	圣斯威特伯特
+S.Tarachus	圣塔拉库斯
+S.Thalelaeus	圣塔莱劳斯（仁慈者）
+S.Theodore T	圣西奥多（提罗）
+S.Thom Apst	圣多默（宗徒）
+S.T.Aquinas	圣托马斯·阿奎那
+S.Valentine	圣瓦伦丁
+S.Victor Mar	圣马赛的维克多
+S.Vitus	圣维图斯
+S.Wenceslaus	圣瓦茨拉夫
+S.Wilfrid	圣威尔弗里德
+S.Willehad	圣威利哈德
+S.Willebald	圣威勒巴尔德
+S.Willibrord	圣威利博罗德
+S.Wolfgang	圣沃尔夫冈
+S.Zita	圣齐塔
+al-Razi's Noxious Aroma	拉齐的毒气
+Gerard C's Noxious Aroma	克雷莫纳的杰拉德的毒气
+Petrus Bs' Noxious Aroma	佩特鲁斯的毒气
+Solomon's Eyeburn	所罗门的灼眼
+Galen's Eyeburn	盖伦的灼眼
+Nicolas Flammel's Eyeburn	弗拉梅尔的灼眼
+Oriental Black Cloud	东方黑云
+Rufinus of G's Black Cloud	鲁菲努斯的黑云
+Michael Scot's Black Cloud	斯科特的黑云
+al-Razi's Fleadust	拉齐的跳蚤粉
+Nicolas F's Fleadust	弗拉梅尔的跳蚤粉
+Richard As' Fleadust	理查德的跳蚤粉
+Solomon's Eater Water	所罗门的蚀水
+Alfred of S's Eater Water	阿尔弗雷德的蚀水
+Gerard of C's Eater Water	克雷莫纳的杰拉德的蚀水
+Smargdn. Breath of Death	斯马尔格登的死亡之息
+al-Kindi Breath of Death	肯迪的死亡之息
+Simon C's Breath of Death	西蒙的死亡之息
+African Sunburst	非洲阳爆
+Raimundus Ls' Sunburst	卢尔的阳爆
+Brother Elias' Sunburst	埃利亚斯兄弟的阳爆
+al-Tamimi's Thunderbolt	塔米米的雷霆
+Maimonides' Thunderbolt	迈蒙尼德的雷霆
+Arnald of V's Thunderbolt	维拉诺瓦的阿尔纳尔德的雷霆
+Geber's Arabian Fire	贾比尔的阿拉伯火药
+Zadith's Arabian Fire	扎迪思的阿拉伯火药
+Hugh's Arabian Fire	休的阿拉伯火药
+Sina's Stone-tar	西那的石焦油
+Albertus Ms' Stone-tar	阿尔伯特的石焦油
+Rob. de K's Stone-tar	罗伯特的石焦油
+Hayyan's Deadly Blade	哈扬的致命利刃
+Vincent Bs' Deadly Blade	文森特的致命利刃
+Roger of H's Deadly Blade	罗杰的致命利刃
+al-Majriti's Strongedge	马吉里蒂的利锋
+John of R's Strongedge	约翰的利锋
+Petrus Bonus' Strongedge	佩特鲁斯的利锋
+ibn Rushd's Greatpower	伊本·鲁世德的巨力
+Jildaki's Greatpower	吉勒达基的巨力
+Albertus M's Greatpower	阿尔伯特的巨力
+ibn Umail's Trueflight	伊本·乌迈尔的真射
+al-Bitruji's Trueflight	比特鲁吉的真射
+John Dausten's Trueflight	道斯滕的约翰的真射
+ibn Yazid's Hardarmor	伊本·叶齐德的坚甲
+Brother Elias' Hardarmor	埃利亚斯兄弟的坚甲
+Leonard of M's Hardarmor	伦纳德的坚甲
+Morienus' Transformation	莫里埃努斯的变形
+Avicenna's Transform.	阿维森纳的变形
+Nicolaus of A's Transform.	尼古拉的变形
+Arfa Ras' Truesight	阿尔法·拉斯的真视
+Rufinus of G's Truesight	鲁菲努斯的真视
+Leonard of M's Truesight	伦纳德的真视
+Sina's New-wind	西那的新风
+Michael Scot's New-wind	斯科特的新风
+John Rupesc.'s New-wind	鲁佩斯克的约翰的新风
+Jabir's Ironarm	贾比尔的铁臂
+Rob de Ketene's Ironarm	凯特内的罗伯特的铁臂
+Hugh's Ironarm	休的铁臂
+Hayyan's Quickmove	哈扬的疾行
+John Dausten's Quickmove	道斯滕的约翰的疾行
+Richard A's Quickmove	理查德的疾行
+Galen's Essence of Grace	盖伦的优雅精华
+Michael S' Essence o'Grace	斯科特的优雅精华
+Avicenna's Essence o'Grace	阿维森纳的优雅精华
+Jabir's Firewall	贾比尔的火墙
+Maimonides' Firewall	迈蒙尼德的火墙
+Raimundus L's Firewall	卢尔的火墙
+aR NoxAro	拉齐的毒气
+GC NoxAro	克雷莫纳的杰拉德的毒气
+PB NoxAro	佩特鲁斯的毒气
+Sol Eyebrn	所罗门的灼眼
+Ga Eyebrn	盖伦的灼眼
+NF Eyebrn	弗拉梅尔的灼眼
+Or BlkCld	东方黑云
+RG BlkCld	鲁菲努斯的黑云
+MS BlkCld	斯科特的黑云
+aR Fleadst	拉齐的跳蚤粉
+NF Fleadst	弗拉梅尔的跳蚤粉
+RA Fleadst	理查德的跳蚤粉
+Sol EatWat	所罗门的蚀水
+AS EatWat	阿尔弗雷德的蚀水
+GC EatWat	克雷莫纳的杰拉德的蚀水
+Sm BDeath	斯马尔格登的死亡之息
+aK BDeath	肯迪的死亡之息
+SC BDeath	西蒙的死亡之息
+Af Sunbst	非洲阳爆
+RL Sunbst	卢尔的阳爆
+BE Sunbst	埃利亚斯兄弟的阳爆
+aT Thundr	塔米米的雷霆
+Mam Thundr	迈蒙尼德的雷霆
+AV Thundr	维拉诺瓦的阿尔纳尔德的雷霆
+Gb AFire	贾比尔的阿拉伯火药
+Za AFire	扎迪思的阿拉伯火药
+Hu AFire	休的阿拉伯火药
+Si Stonetr	西那的石焦油
+AM Stonetr	阿尔伯特的石焦油
+RK Stonetr	罗伯特的石焦油
+Ha DeadBld	哈扬的致命利刃
+VB DeadBld	文森特的致命利刃
+RH DeadBld	罗杰的致命利刃
+a-M StrgEdg	马吉里蒂的利锋
+JR StrgEdg	约翰的利锋
+PB StrgEdg	佩特鲁斯的利锋
+iR Grtpwr	伊本·鲁世德的巨力
+Ji Grtpwr	吉勒达基的巨力
+AM Grtpwr	阿尔伯特的巨力
+iU TruFlt	伊本·乌迈尔的真射
+aB TruFlt	比特鲁吉的真射
+JD TruFlt	道斯滕的约翰的真射
+iY HrdArm	伊本·叶齐德的坚甲
+BE HrdArm	埃利亚斯兄弟的坚甲
+LM HrdArm	伦纳德的坚甲
+Mo Transf	莫里埃努斯的变形
+Av Transf	阿维森纳的变形
+NA Transf	尼古拉的变形
+AR TruSgt	阿尔法·拉斯的真视
+RG TruSgt	鲁菲努斯的真视
+LM TruSgt	伦纳德的真视
+Si NewWnd	西那的新风
+MS NewWnd	斯科特的新风
+JR NewWnd	鲁佩斯克的约翰的新风
+Ja Ironarm	贾比尔的铁臂
+RK Ironarm	凯特内的罗伯特的铁臂
+Hu Ironarm	休的铁臂
+Ha Quckmov	哈扬的疾行
+JD Quckmov	道斯滕的约翰的疾行
+RA Quckmov	理查德的疾行
+Ga EssGrc	盖伦的优雅精华
+MS EssGrc	斯科特的优雅精华
+Av EssGrc	阿维森纳的优雅精华
+Ja Firewal	贾比尔的火墙
+Mam Firewal	迈蒙尼德的火墙
+RL Firewal	卢尔的火墙
+ P	P 
+urchase an item	购买物品
+ S	S 
+ell an item	出售物品
+ currently has...	 当前持有……
+ has...	 有……
+ B	B 
+arter for another person	换人交易
+ L	L 
+eave	离开
+ G	G 
+et an item from cache	从储物柜取出物品
+ut an item into cache	存入储物柜
+The cache contains...	储物柜中有……
+ C	C 
+ache another person's items	托管他人储物柜
+et an item from pile of loot	从战利品堆取出物品
+ut an item into the pile of loot	放入战利品堆
+The loot contains...	战利品堆中有……
+ D	D 
+istribute to a different person	分给他人
+
+$0 currently has...	$0 当前持有……
+$0 has...	$0 持有……
+$0 offers...	$0 提供……
+$0 barters for $1 to the $2	$0 替 $1 与 $2 交易
+$0 holds the purse of $1fl, $2gr, $3pf ($4pf).	$0 钱袋：$1fl $2gr $3pf（共$4pf）
+$0 holds the purse of $1fl, $2gr, $3pf.	$0 钱袋：$1fl $2gr $3pf
+The party finds $0fl, $1gr, $2pf in cash.	队伍拾得现金 $0fl $1gr $2pf。
+$0pf  $1  ($2) $3q	$0pf  $1  ($2) $3品
+$0pf  $1  $2q  $3lbs	$0pf  $1  $2品  $3磅
+$0  ($1) $2$3	$0  ($1) $2$3
+-Qual	品
+-q	品
+She	她
+himself	他自己
+herself	她自己
+Blacksmith	铁匠铺
+Goods Merchant	杂货商
+Swordsmith	刀剑铺
+Armorer	盔甲商
+Gunsmith	火器商
+Bowyer	弓匠
+Artificier	巧匠铺
+Jeweler	珠宝商
+Clothmaker	布商
+Physician	医师
+Hospital	医院
+Nobility	贵族

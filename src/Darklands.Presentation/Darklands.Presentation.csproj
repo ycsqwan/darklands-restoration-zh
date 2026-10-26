@@ -12,6 +12,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\OpeningTimer.txt" LogicalName="Darklands.Presentation.Resources.OpeningTimer.txt" />
     <EmbeddedResource Include="Resources\ChineseFont.ttf" LogicalName="Darklands.Presentation.Resources.ChineseFont.ttf" Condition="Exists('Resources\ChineseFont.ttf')" />
+    <EmbeddedResource Include="Resources\ChineseUiFont.ttf" LogicalName="Darklands.Presentation.Resources.ChineseUiFont.ttf" Condition="Exists('Resources\ChineseUiFont.ttf')" />
     <EmbeddedResource Include="Resources\translations_zh.tsv" LogicalName="Darklands.Presentation.Resources.translations_zh.tsv" Condition="Exists('Resources\translations_zh.tsv')" />
   </ItemGroup>
 

@@ -70,24 +70,16 @@ public sealed class BuySellPage(GameUi ui, PartyPanel panel)
     }
 
     /// <summary>
-    /// Draws a line of text in <paramref name="color"/>. Bytes from 0x80 change the colour to
-    /// their low seven bits (0xFF: back to <paramref name="color"/>), as the game's text driver does.
+    /// Draws a line of text in <paramref name="color"/>. A byte from 0x80 changes the colour to its low
+    /// seven bits (0xFF: back to <paramref name="color"/>), as the game's text driver does, and a run of
+    /// bytes that is not a colour code is one Chinese character (see <see cref="TextDecoder"/>).
     /// </summary>
     // orig: gfx_text(screen_win, x, y, s) — graphics driver thunk root 047C:055A (asm driver; colour-byte rule as decoded from the driver code)
     // UNCERTAIN: glyph clipping at the window's right edge is not reproduced (long lines are cut by the screen edge only).
-    public void Text(int x, int y, string text, byte color)
-    {
-        var ink = color;
-        foreach (var c in TextPainter.Encode(text))
-        {
-            if ((c & 0x80) != 0)
-            {
-                ink = (c & 0x7F) == 0x7F ? color : (byte)(c & 0x7F);
-                continue;
-            }
-            x += ui.Text.DrawCharacter(ui.Canvas, x, y, c, ink);
-        }
-    }
+    // The text goes through TextPainter.Draw, so the colour codes keep their meaning and the Chinese
+    // translation of a printable run (TranslationTable) is drawn with the TrueType face; the driver's own
+    // loop read the bytes one at a time and could not see a multi-byte character.
+    public void Text(int x, int y, string text, byte color) => ui.Text.Draw(ui.Canvas, x, y, text, color);
 
     /// <summary>Replaces colour <paramref name="from"/> by <paramref name="to"/> in a rectangle.</summary>
     // orig: gfx_recolor_rect(screen_win, x, y, w, h, from, to) — graphics driver thunk root 047C:04DC (asm driver)

@@ -19,9 +19,10 @@ public sealed unsafe class CjkFont : IDisposable
     private readonly StbTrueType.stbtt_fontinfo _info;
     private readonly float _scale;
     private readonly int _ascent;
+    private readonly int _baseline;
     private readonly Dictionary<int, CjkGlyph> _glyphs = [];
 
-    private CjkFont(byte[] file, int em, int? lineHeight)
+    private CjkFont(byte[] file, int em, int? lineHeight, int? baseline = null)
     {
         Em = em;
         _pin = GCHandle.Alloc(file, GCHandleType.Pinned);
@@ -39,14 +40,17 @@ public sealed unsafe class CjkFont : IDisposable
         int ascent, descent, gap;
         StbTrueType.stbtt_GetFontVMetrics(_info, &ascent, &descent, &gap);
         _ascent = (int)Math.Round(ascent * _scale);
+        // The bitmap fonts put their baseline at the bottom of the glyph box (6 px for font 1, 7 for font 3),
+        // so a face drawn beside them takes its baseline from there rather than from its own ascent.
+        _baseline = baseline ?? _ascent;
         LineHeight = lineHeight ?? (int)Math.Round((ascent - descent + gap) * _scale);
     }
 
     /// <summary>The em square in pixels the font is rasterised at.</summary>
     public int Em { get; }
 
-    /// <summary>Pixels from the top of a line to the baseline.</summary>
-    public int Ascent => _ascent;
+    /// <summary>Pixels from the top of a line to the baseline (the font's ascent, or the one it was loaded with).</summary>
+    public int Ascent => _baseline;
 
     /// <summary>Pixels from the baseline to the bottom of a line (positive).</summary>
     public int Descent => (int)Math.Round(-DescentOf(_info, _scale));
@@ -89,7 +93,7 @@ public sealed unsafe class CjkFont : IDisposable
         {
             return;
         }
-        var top = y + _ascent + glyph.OffsetY;
+        var top = y + _baseline + glyph.OffsetY;
         for (var row = 0; row < glyph.Height; row++)
         {
             for (var column = 0; column < visible; column++)
@@ -123,7 +127,7 @@ public sealed unsafe class CjkFont : IDisposable
     /// nothing to load. <paramref name="lineHeight"/> overrides the distance between two baselines when the
     /// font's own is too loose for the layout (12 px Chinese wants 13 px lines, not 15).
     /// </summary>
-    public static CjkFont? Load(string? path, int em, int? lineHeight = null, Action<string>? report = null)
+    public static CjkFont? Load(string? path, int em, int? lineHeight = null, Action<string>? report = null, int? baseline = null)
     {
         if (string.IsNullOrWhiteSpace(path))
         {
@@ -131,7 +135,7 @@ public sealed unsafe class CjkFont : IDisposable
         }
         try
         {
-            return new CjkFont(File.ReadAllBytes(path), em, lineHeight);
+            return new CjkFont(File.ReadAllBytes(path), em, lineHeight, baseline);
         }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException or InvalidDataException or IndexOutOfRangeException or ArgumentException)
         {
@@ -140,10 +144,11 @@ public sealed unsafe class CjkFont : IDisposable
         }
     }
 
-    /// <summary>Loads an embedded font resource; <paramref name="path"/>, when given, wins.</summary>
-    public static CjkFont? LoadEmbedded(string? path, int em, int? lineHeight, Action<string>? report)
+    /// <summary>Loads an embedded font resource (<paramref name="resource"/>); <paramref name="path"/>, when given, wins.</summary>
+    public static CjkFont? LoadEmbedded(string? path, int em, int? lineHeight, Action<string>? report, int? baseline = null,
+        string resource = "Darklands.Presentation.Resources.ChineseFont.ttf")
     {
-        var direct = Load(path, em, lineHeight, report);
+        var direct = Load(path, em, lineHeight, report, baseline);
         if (direct is not null)
         {
             return direct;
@@ -154,14 +159,14 @@ public sealed unsafe class CjkFont : IDisposable
         }
         try
         {
-            using var stream = typeof(TextPainter).Assembly.GetManifestResourceStream("Darklands.Presentation.Resources.ChineseFont.ttf");
+            using var stream = typeof(TextPainter).Assembly.GetManifestResourceStream(resource);
             if (stream is null)
             {
                 return null;
             }
             using var memory = new MemoryStream();
             stream.CopyTo(memory);
-            return new CjkFont(memory.ToArray(), em, lineHeight);
+            return new CjkFont(memory.ToArray(), em, lineHeight, baseline);
         }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException or InvalidDataException or IndexOutOfRangeException or ArgumentException or InvalidOperationException)
         {

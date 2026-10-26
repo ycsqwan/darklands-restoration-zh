@@ -5,6 +5,7 @@ using Darklands.Core.Characters;
 using Darklands.Core.Items;
 using Darklands.Core.Rules;
 using Darklands.Platform;
+using Darklands.Presentation.Graphics;
 
 namespace Darklands.Presentation;
 
@@ -408,7 +409,7 @@ public sealed class ItemStoreScreen(BuySellPage page, GameState state, IGameScre
         page.Text(0x50, 0x23, PutLine, BuySellPage.Ink);
         DrawMenuTail();
         page.Text(0x6B, 0x45, "The cache contains...", BuySellPage.Ink);
-        page.Text(0x77, 0x83, $"{Party.Slot(Member).ShortName} currently has...", BuySellPage.Ink);
+        page.Text(0x77, 0x83, TranslationTable.Line("$0 currently has...", Party.Slot(Member).ShortName), BuySellPage.Ink);
         var pack = PackOf(Member);
         for (var i = 0; i < 4 && i < pack.Count; i++)
         {
@@ -435,7 +436,7 @@ public sealed class ItemStoreScreen(BuySellPage page, GameState state, IGameScre
         DrawMenuTail();
         // C: the redraw prints this heading at x 0x57, the first drawing at 0x6B.
         page.Text(0x57, 0x45, "The cache contains...", BuySellPage.Ink);
-        page.Text(0x77, 0x83, $"{Party.Slot(Member).ShortName} has...", BuySellPage.Ink);
+        page.Text(0x77, 0x83, TranslationTable.Line("$0 has...", Party.Slot(Member).ShortName), BuySellPage.Ink);
         var pack = PackOf(Member);
         for (var i = 0; i < 4 && i < pack.Count; i++)
         {
@@ -487,15 +488,22 @@ public sealed class ItemStoreScreen(BuySellPage page, GameState state, IGameScre
     private string PurseLine()
     {
         var purse = Party.Purse;
-        return Invariant($"{Party.Slot(Party.LeaderIndex).ShortName} holds the purse of {purse.Florins}fl, {purse.Groschen}gr, {purse.Pfennigs}pf.");
+        return TranslationTable.Line("$0 holds the purse of $1fl, $2gr, $3pf.",
+            Party.Slot(Party.LeaderIndex).ShortName,
+            Invariant($"{purse.Florins}"), Invariant($"{purse.Groschen}"), Invariant($"{purse.Pfennigs}"));
     }
 
     // C: the store's qual and cnt are signed chars printed with %d (a count of 200 prints −56).
     private string StoreLine(StoredItem entry) => ItemLine(entry.Code, (sbyte)entry.Count, (sbyte)entry.Quality, "-Qual");   // the store keeps them as signed bytes
 
     /// <summary>"name  (%3d) %2d-Qual".</summary>
+    // The line is built from data (a count, a quality), so it is never one static key: the name and the quality
+    // word are translated on their own and the Chinese side of the template carries the quality mark.
     private string ItemLine(int code, int count, int quality, string qualityWord) =>
-        Invariant($"{state.Item(code).Name}  ({count,3}) {quality,2}{qualityWord}");
+        TranslationTable.Line("$0  ($1) $2$3",
+            TranslationTable.Name(state.Item(code).Name),
+            Invariant($"{count,3}"), Invariant($"{quality,2}"),
+            TranslationTable.Name(qualityWord == "-Qual" ? "-Qual" : "-q"));
 
     private static string Invariant(FormattableString text) => text.ToString(CultureInfo.InvariantCulture);
 }

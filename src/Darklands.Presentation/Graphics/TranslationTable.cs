@@ -90,6 +90,46 @@ public sealed class TranslationTable
     /// <summary>The Chinese text of one English run, or false when the table does not have it.</summary>
     public bool TryTranslate(string english, out string chinese) => _translations.TryGetValue(english, out chinese!);
 
+    /// <summary>
+    /// The Chinese of a name the game puts into a line it builds (a shop's, an item's), or the name itself
+    /// when the table has none.
+    /// </summary>
+    // A name printed on its own is a run and goes through Decode, but a line the game builds from data (a
+    // price, a count, a member's name) is never one static key: the screen translates the names it
+    // interpolates with this and leaves the rest of the line alone.
+    public static string Name(string english) =>
+        Current is { } table && table.TryTranslate(english, out var chinese) ? chinese : english;
+
+    /// <summary>
+    /// A line the game builds from a template: <paramref name="template"/> is the table's key and carries $0,
+    /// $1 … where the parts go, so the Chinese side can put them in its own order.
+    /// </summary>
+    // "$0 currently has..." -> "$0 当前持有……" keeps the English word order, "$0 barters for $1 to the $2" ->
+    // "$0 替 $1 与 $2 交易" does not, which is why the parts are numbered rather than pasted in order.
+    public static string Line(string template, params string[] parts)
+    {
+        var text = Current is { } table && table.TryTranslate(template, out var chinese) ? chinese : template;
+        if (parts.Length == 0)
+        {
+            return text;
+        }
+        var result = new StringBuilder(text.Length + 8 * parts.Length);
+        for (var i = 0; i < text.Length; i++)
+        {
+            var c = text[i];
+            if (c == '$' && i + 1 < text.Length && text[i + 1] is >= '0' and <= '9' && text[i + 1] - '0' < parts.Length)
+            {
+                result.Append(parts[text[i + 1] - '0']);
+                i++;
+            }
+            else
+            {
+                result.Append(c);
+            }
+        }
+        return result.ToString();
+    }
+
     /// <summary>Replaces the printable runs of a byte text by their Chinese; the codes pass through.</summary>
     // This is the card text's translation: it runs before TextVariables.Expand, so the $names survive.
     public byte[] Translate(byte[] text)

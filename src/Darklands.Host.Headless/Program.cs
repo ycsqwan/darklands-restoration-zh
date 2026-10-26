@@ -270,12 +270,15 @@ if (screenStep is not null)
     var which = screenStep[7..];
     if (which is "barter" or "store" or "loot")
     {
-        ScreenPreview.Run(host, OpenGame(), which, seed);
+        ScreenPreview.Run(host, OpenGame(), which, seed, output);
     }
     else
     {
-        DebugScreens.Run(host, OpenGame(), which, seed);
+        DebugScreens.Run(host, OpenGame(), which, seed, output);
     }
+    // the screen is drawn once and then waits for input, so the shot is taken here (a shot: step would
+    // never be reached: this branch returns before the step loop runs).
+    host.Shot(which);
     Console.WriteLine($"{host.ShotsTaken} screenshot(s) in {output}");
     return 0;
 }
@@ -708,7 +711,7 @@ internal sealed class ScriptedHost(List<string> steps, string output) : IHost, I
 /// <summary>Opens the sheet, party information, camp or alchemy screen directly (a debugging aid).</summary>
 internal static class DebugScreens
 {
-    public static void Run(IHost host, GameFiles files, string which, uint seed)
+    public static void Run(IHost host, GameFiles files, string which, uint seed, string output)
     {
         var world = WorldData.Load(files);
         var ui = new GameUi(host, new GameAssets(files));
@@ -729,6 +732,8 @@ internal static class DebugScreens
         catch (QuitGameException)
         {
         }
+        // These screens draw and then wait for a key without presenting, so save the canvas they left behind.
+        ui.SaveScreenshot(Path.Combine(output, which.Replace(':', '-') + ".png"));
     }
 
     private sealed class NoOtherScreens : Darklands.Cards.IGameScreens

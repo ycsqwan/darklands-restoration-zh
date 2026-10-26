@@ -3,6 +3,7 @@ using Darklands.Cards;
 using Darklands.Core;
 using Darklands.Core.Rules;
 using Darklands.Platform;
+using Darklands.Presentation.Graphics;
 
 namespace Darklands.Presentation;
 
@@ -429,7 +430,7 @@ public sealed class BarterScreen
         _page.Text(0x50, 0x23, SellLine, BuySellPage.Faded);
         _page.Text(0x50, 0x2B, BlankLine, BuySellPage.Faded);
         DrawMenuTail();
-        _page.Text(0x81, 0x83, $"{Party.Slot(_member).ShortName} currently has...", BuySellPage.Ink);
+        _page.Text(0x81, 0x83, TranslationTable.Line("$0 currently has...", Party.Slot(_member).ShortName), BuySellPage.Ink);
         var pack = PackOf(_member);
         for (var i = 0; i < 4 && i < pack.Count; i++)
         {
@@ -460,7 +461,7 @@ public sealed class BarterScreen
         _page.Text(0x50, 0x23, SellLine, _buying[_member] ? BuySellPage.Faded : BuySellPage.Ink);
         _page.Text(0x50, 0x2B, BlankLine, BuySellPage.Faded);
         DrawMenuTail();
-        _page.Text(0x81, 0x83, $"{Party.Slot(_member).ShortName} has...", BuySellPage.Ink);
+        _page.Text(0x81, 0x83, TranslationTable.Line("$0 has...", Party.Slot(_member).ShortName), BuySellPage.Ink);
         var pack = PackOf(_member);
         for (var i = _packTop[_member]; i < _packTop[_member] + 4 && i < pack.Count; i++)
         {
@@ -486,7 +487,7 @@ public sealed class BarterScreen
     {
         _page.Text(0x50, 0x33, "\u008C B\u00FFarter for another person", BuySellPage.Ink);
         _page.Text(0x50, 0x3B, "\u008C L\u00FFeave", BuySellPage.Ink);
-        _page.Text(0x7A, 0x45, $"The {_shop.Name} offers...", BuySellPage.Ink);
+        _page.Text(0x7A, 0x45, TranslationTable.Line("$0 offers...", TranslationTable.Name(_shop.Name)), BuySellPage.Ink);
     }
 
     /// <summary>Four of the member's stacks with what the shop pays.</summary>
@@ -523,7 +524,10 @@ public sealed class BarterScreen
     private string PurseLine()
     {
         var purse = Party.Purse;
-        return Invariant($"{Party.Slot(Leader).ShortName} holds the purse of {purse.Florins}fl, {purse.Groschen}gr, {purse.Pfennigs}pf ({(uint)purse.TotalPfennigs}pf).");
+        return TranslationTable.Line("$0 holds the purse of $1fl, $2gr, $3pf ($4pf).",
+            Party.Slot(Leader).ShortName,
+            Invariant($"{purse.Florins}"), Invariant($"{purse.Groschen}"), Invariant($"{purse.Pfennigs}"),
+            Invariant($"{(uint)purse.TotalPfennigs}"));
     }
 
     // C: he/she and himself/herself follow the leader's sex (party[leader].female) even when naming another member.
@@ -531,9 +535,10 @@ public sealed class BarterScreen
     {
         var leader = Party.Slot(Leader);
         var member = Party.Slot(_member).ShortName;
+        var shop = TranslationTable.Name(_shop.Name);
         return Leader != _member
-            ? $"{(leader.IsFemale ? "She" : "He")} barters for {member} to the {_shop.Name}"
-            : $"{member} barters for {(leader.IsFemale ? "herself" : "himself")} to the {_shop.Name}";
+            ? TranslationTable.Line("$0 barters for $1 to the $2", TranslationTable.Name(leader.IsFemale ? "She" : "He"), member, shop)
+            : TranslationTable.Line("$0 barters for $1 to the $2", member, TranslationTable.Name(leader.IsFemale ? "herself" : "himself"), shop);
     }
 
     /// <summary>"%5upf  name  (%3d) %2dq": what the shop pays for one, the name, the count and the quality.</summary>
@@ -542,7 +547,9 @@ public sealed class BarterScreen
         var code = stack.Code & 0xFFF;
         // C: sprintf arguments right to left: quality, count, name, then sell_price (a flag-8 draw per line).
         var price = (ushort)Trading.SellPrice(_state, code, stack.Quality);
-        return Invariant($"{price,5}pf  {_state.Item(code).Name}  ({stack.Count,3}) {stack.Quality,2}q");
+        return TranslationTable.Line("$0pf  $1  ($2) $3q",
+            Invariant($"{price,5}"), TranslationTable.Name(_state.Item(code).Name),
+            Invariant($"{stack.Count,3}"), Invariant($"{stack.Quality,2}"));
     }
 
     /// <summary>"%5upf  name  %3dq  %3dlbs" (or "%3dpf ..." when not <paramref name="wide"/>): the price, the name, the quality offered and the weight.</summary>
@@ -551,7 +558,9 @@ public sealed class BarterScreen
         var d = _state.Item(code);
         // C: "%5upf" prints the price word unsigned; draw_shop_items uses "%3dpf" (signed, three wide).
         var shown = wide ? Invariant($"{(ushort)price,5}") : Invariant($"{(short)price,3}");
-        return Invariant($"{shown}pf  {d.Name}  {Trading.OfferedQuality(_state, _shop, code),3}q  {(sbyte)d.Weight,3}lbs");
+        return TranslationTable.Line("$0pf  $1  $2q  $3lbs",
+            shown, TranslationTable.Name(d.Name),
+            Invariant($"{Trading.OfferedQuality(_state, _shop, code),3}"), Invariant($"{(sbyte)d.Weight,3}"));
     }
 
     private static string Invariant(FormattableString text) => text.ToString(CultureInfo.InvariantCulture);
