@@ -1110,7 +1110,12 @@ public sealed class CharacterSheetScreen(GameUi ui, PartyPanel panel, IReadOnlyL
                     if (_top[k, _who] + j < m.Pack.Count)
                     {
                         var st = m.Pack[_top[k, _who] + j];
-                        t.Draw(c, x + 9, j * 8 + y + 9, $"{_s.Item(st.Code & 0xFFF).Name} {st.Quality:00}q ({st.Count})", ListColor);
+                        t.Draw(c, x + 9, j * 8 + y + 9,
+                        TranslationTable.Line("$0 $1q ($2)",
+                            TranslationTable.Name(_s.Item(st.Code & 0xFFF).Name),
+                            st.Quality.ToString("00"),
+                            st.Count.ToString()),
+                        ListColor);
                     }
                 }
                 HighlightLine(k);

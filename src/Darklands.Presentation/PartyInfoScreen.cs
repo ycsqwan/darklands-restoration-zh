@@ -109,9 +109,9 @@ public sealed class PartyInfoScreen(GameUi ui, PartyPanel panel)
         ui.Canvas.CopyFrom(_back, TownBoxX, TownBoxY, clearWidth, clearHeight);
         var place = state.Locations[town];
         ScreenDrawing.Centered(ui, TownCenterX, 0x22, place.Name, TextColor);
-        ScreenDrawing.Centered(ui, TownCenterX, 0x2C, PartyStanding.SizeWord(place.Size), TextColor);
-        ScreenDrawing.Centered(ui, TownCenterX, 0x36, "Rep: " + PartyStanding.StandingWord(state, town), TextColor);
-        ScreenDrawing.Centered(ui, TownCenterX, 0x40, $"({place.Reputation})", TextColor);
+        ScreenDrawing.Centered(ui, TownCenterX, 0x2C, TranslationTable.Name(PartyStanding.SizeWord(place.Size)), TextColor);
+        ScreenDrawing.Centered(ui, TownCenterX, 0x36, TranslationTable.Line("Rep: $0", TranslationTable.Name(PartyStanding.StandingWord(state, town))), TextColor);
+        ScreenDrawing.Centered(ui, TownCenterX, 0x40, TranslationTable.Line("($0)", place.Reputation.ToString(Invariant)), TextColor);
     }
 
     // orig: the scaling of R034+0x1A86: x × 327 / 118, y × 931 / 106 in 32-bit
@@ -133,9 +133,9 @@ public sealed class PartyInfoScreen(GameUi ui, PartyPanel panel)
         var text = ui.Text;
         var canvas = ui.Canvas;
         var date = state.Date;
-        ScreenDrawing.Centered(ui, 0x60, 0x40, TextVariables.BellNames[TimeOfDay.Band(date.Hour)], TextColor);
+        ScreenDrawing.Centered(ui, 0x60, 0x40, TranslationTable.Name(TextVariables.BellNames[TimeOfDay.Band(date.Hour)]), TextColor);
         text.Draw(canvas, 0x58, 0x48, date.Hour.ToString(Invariant), TextColor);
-        ScreenDrawing.Centered(ui, 0xA0, 0x40, TextVariables.MonthNames[date.Month], TextColor);
+        ScreenDrawing.Centered(ui, 0xA0, 0x40, TranslationTable.Name(TextVariables.MonthNames[date.Month]), TextColor);
         text.Draw(canvas, 0x98, 0x48, date.Day.ToString(Invariant), TextColor);
         if (state.InCity)
         {
@@ -146,20 +146,20 @@ public sealed class PartyInfoScreen(GameUi ui, PartyPanel panel)
             var near = LocationRules.NearestCity(state, state.MapPosition.X, state.MapPosition.Y);
             var town = state.Locations[near];
             var direction = PartyStanding.Direction(town.X, town.Y, state.MapPosition.X, state.MapPosition.Y);
-            text.Draw(canvas, 0x46, 0x6F, PartyStanding.Directions[direction] + " of ", TextColor);
+            text.Draw(canvas, 0x46, 0x6F, TranslationTable.Line("$0 of ", TranslationTable.Name(PartyStanding.Directions[direction])), TextColor);
             text.Draw(canvas, 0x48, 0x78, town.Name, TextColor);
         }
         var purse = state.Party.Purse;
-        text.Draw(canvas, 0x43, 0x9D, $"{purse.Florins} Florins", TextColor);
-        text.Draw(canvas, 0x43, 0xA5, $"{purse.Groschen} Groschen", TextColor);
-        text.Draw(canvas, 0x43, 0xAD, $"{purse.Pfennigs} Pfenniges", TextColor);
-        text.Draw(canvas, 0x43, 0xB5, $"({purse.TotalPfennigs}) Total", TextColor);
-        text.Draw(canvas, 0x84, 0x9D, $"{state.Party.BankNotes.Florins} Florins", TextColor);
-        text.Draw(canvas, 0x84, 0xAD, $"{state.Party.PhilosophersStone} PhStone", TextColor);
+        text.Draw(canvas, 0x43, 0x9D, TranslationTable.Line("$0 Florins", purse.Florins.ToString(Invariant)), TextColor);
+        text.Draw(canvas, 0x43, 0xA5, TranslationTable.Line("$0 Groschen", purse.Groschen.ToString(Invariant)), TextColor);
+        text.Draw(canvas, 0x43, 0xAD, TranslationTable.Line("$0 Pfenniges", purse.Pfennigs.ToString(Invariant)), TextColor);
+        text.Draw(canvas, 0x43, 0xB5, TranslationTable.Line("($0) Total", purse.TotalPfennigs.ToString(Invariant)), TextColor);
+        text.Draw(canvas, 0x84, 0x9D, TranslationTable.Line("$0 Florins", state.Party.BankNotes.Florins.ToString(Invariant)), TextColor);
+        text.Draw(canvas, 0x84, 0xAD, TranslationTable.Line("$0 PhStone", state.Party.PhilosophersStone.ToString(Invariant)), TextColor);
         if (state.InCity)
         {
-            text.Draw(canvas, 0x84, 0x6F, PartyStanding.StandingWord(state, state.CurrentLocation), TextColor);
-            text.Draw(canvas, 0x8E, 0x77, $"({state.Here!.Reputation})", TextColor);
+            text.Draw(canvas, 0x84, 0x6F, TranslationTable.Name(PartyStanding.StandingWord(state, state.CurrentLocation)), TextColor);
+            text.Draw(canvas, 0x8E, 0x77, TranslationTable.Line("($0)", state.Here!.Reputation.ToString(Invariant)), TextColor);
         }
     }
 
@@ -167,7 +167,7 @@ public sealed class PartyInfoScreen(GameUi ui, PartyPanel panel)
     /// <summary>The headings, drawn twice: a shadow one pixel lower right, then the title colour.</summary>
     private void DrawTitles(int fame)
     {
-        var title = PartyStanding.FameTitle(fame);
+        var title = TranslationTable.Name(PartyStanding.FameTitle(fame));
         // orig: text_width R034+0x1B3C (1550:0C5C) matched: the sum of char_width(c, screen_win_font)
         //   over the string, as Measure in the current font; also centres the town lines at TownCenterX (0x102 - width / 2).
         var width = ui.Text.Measure(title);

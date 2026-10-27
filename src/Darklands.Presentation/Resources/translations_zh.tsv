@@ -8642,3 +8642,138 @@ A great wanderer and pilgrim, he wrote the first English travel book. Provides a
 A missionary, he was so successful at converting Frieslanders that he became known as "the apostle of the Frisians." He provides a modest increase to Woodwise, a good increase to Charisma, and a very good increase to Speak Common. He can enhance local reputation in northern Germany.	传教士，感化弗里斯兰人极为成功，因而被称为"弗里斯兰人的使徒"。他适度提升林地知识，大幅提升魅力，相当多地提升通用语。他可提升德国北部的当地声望。
 A director of monastery schools, known for his work with the poor and also with nobility (including the Emperor). Increases Intelligence, Charisma, Woodwise, and Riding by a modest amount, and Speak Common by a very great amount. He also enhances local reputation in villages and with nobility.	修道院学校的校长，既致力于济贫，也与贵族（包括皇帝）往来。他适度提升智力、魅力、林地知识与骑术，极大提升通用语。他还提升村庄中以及与贵族之间的当地声望。
 Patron Saint of servants, she was known for her patience, zeal, and holiness. She was a servant in the same household for 46 years. Enhances Perception and Streetwise by a modest amount, and heals one point of Strength and a small amount of Endurance. She can also gain information from servants.	仆役的守护圣人，以耐心、热忱与圣德著称，在同一户人家做了四十六年仆役。她适度提升感知与街头门路，治疗 1 点力量与少量耐力。她还能从仆役口中获得情报。
+Endurance	耐力
+Strength	力量
+Agility	敏捷
+Perception	感知
+Intelligence	智力
+Charisma	魅力
+Divine Favor	神恩
+Edged Wpns	刃类武器
+Impact Wpns	击打武器
+Flail Wpns	链枷武器
+Polearm Wpns	长柄武器
+Thrown Wpns	投掷武器
+Bow Weapons	弓类武器
+Missile Device	弩类器械
+Alchemy	炼金术
+Religious Trng	宗教训练
+Virtue	美德
+Speak Common	通用语
+Speak Latin	拉丁语
+Read & Write	读写
+Healing	治疗
+Artifice	工艺
+Stealth	潜行
+Streetwise	街头智慧
+Riding	骑术
+Woodwise	林地知识
+End	耐力
+Str	力量
+Agl	敏捷
+Per	感知
+Int	智力
+Chr	魅力
+DF	神恩
+wEdg	刃类
+wImp	击打
+wFll	链枷
+wPol	长柄
+wThr	投掷
+wBow	弓类
+wMsD	弩械
+Alch	炼金
+Relg	宗教
+Virt	美德
+SpkC	通用
+SpkL	拉丁
+R&W	读写
+Heal	治疗
+Artf	工艺
+Stlh	潜行
+StrW	街头
+Ride	骑术
+WdWs	林地
+Leader	领队
+Not Leader	非领队
+Age	年龄
+(F)	（女）
+(M)	（男）
+Light Load	轻载
+Normal Load	标准负重
+Heavy Load	重载
+Overloaded	超载
+No Weapon	无武器
+No V:Armor	无V:护甲
+No L:Armor	无L:护甲
+No Shield	无盾牌
+No Msl Wpn	无弩械
+No Vitals Armor	无重要部位护甲
+No Limb Armor	无四肢护甲
+No Missile Weapon	无弩械
+Enhc/Bless	强化/祝福
+Equipment	装备
+Formulae	配方
+Saints	圣徒
+PARTY INFORMATION	队伍信息
+MAP INFORMATION	地图信息
+PARTY FAME	队伍声望
+TIME	时间
+DATE	日期
+LOCATION	地点
+WEALTH	财富
+NOTES	笔记
+LOCAL REP	本地声望
+MAP	地图
+PARTY	队伍
+Florins	弗罗林
+Groschen	格罗申
+Pfenniges	芬尼
+PhStone	哲人石
+Total	总计
+Rep:	声望：
+$0 $1q ($2)	$0 $1q（$2）
+$0 of 	$0 方向
+$0 Florins	$0 弗罗林
+$0 Groschen	$0 格罗申
+$0 Pfenniges	$0 芬尼
+($0) Total	（$0）总计
+$0 PhStone	$0 哲人石
+($0)	（$0）
+Rep: $0	声望：$0
+Latins	晨祷
+Prime	初时
+Terce	三时
+Sexts	六时
+Nones	九时
+Vespers	晚祷
+Compline	夜祷
+Matins	夜课
+North	北
+Northeast	东北
+East	东
+Southeast	东南
+South	南
+Southwest	西南
+West	西
+Northwest	西北
+a local hero	当地英雄
+respected	受尊敬
+unknown	无名
+suspected	可疑
+wanted	通缉
+hunted	被追捕
+Small-Sized	小型
+Moderate-Sized	中型
+Large-Sized	大型
+Unknown	默默无闻
+Barely Known	鲜为人知
+Slight Reputation	略有微名
+Modest Reputation	小有名气
+Good Reputation	声名良好
+Slight Heroes	微名英雄
+Modest Heroes	小有名望的英雄
+Great Heroes	伟大英雄
+Famous Heroes	著名英雄
+Storied Heroes	传奇英雄
+Legendary Heroes	史诗英雄
