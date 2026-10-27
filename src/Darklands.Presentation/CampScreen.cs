@@ -35,8 +35,8 @@ public sealed class CampScreen(GameUi ui, PartyPanel panel, IReadOnlyList<Formul
 
     private static readonly string[] ActivityTexts =
     [
-        "Relaxes", "Regain strength (gain {0})", "Pray for divine favor (gain {0})", "Make {0} {1}", "Earn {0} pf/day as {1}",
-        "Maintain camp, food", "Train or Study ({1})",
+        "Relaxes", "Regain strength (gain $0)", "Pray for divine favor (gain $0)", "Make $0 $1", "Earn $0 pf/day as $1",
+        "Maintain camp, food", "Train or Study ($1)",
     ];
 
     private static readonly string[] MenuLines =
@@ -455,8 +455,8 @@ public sealed class CampScreen(GameUi ui, PartyPanel panel, IReadOnlyList<Formul
             var color = _chosen == i ? ChosenColor : PartyColor;
             var y = i * 0x12 + 0x30;
             ui.Text.Draw(ui.Canvas, 0x49, y, m.ShortName + "...", color);
-            var text = string.Format(System.Globalization.CultureInfo.InvariantCulture, ActivityTexts[(int)_stay.Activity[i]],
-                _stay.Gain[i], _stay.Detail[i]);
+            var text = TranslationTable.Line(ActivityTexts[(int)_stay.Activity[i]],
+                _stay.Gain[i].ToString(System.Globalization.CultureInfo.InvariantCulture), _stay.Detail[i]);
             ScreenDrawing.Wrapped(ui, text, 0x50, 0x78, y, color, leading: 0);
         }
     }
@@ -469,23 +469,32 @@ public sealed class CampScreen(GameUi ui, PartyPanel panel, IReadOnlyList<Formul
         string text;
         if (Wild)
         {
-            text = $"You live off the land, but the lord may be upset if you are caught. After {_stay.Days} days the risk is {_stay.Risk / 5}";
+            text = TranslationTable.Line(
+                "You live off the land, but the lord may be upset if you are caught. After $0 days the risk is $1",
+                _stay.Days.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                (_stay.Risk / 5).ToString(System.Globalization.CultureInfo.InvariantCulture));
         }
         else
         {
             var cost = _stay.DayCost();
             var price = _stay.LodgingPrice;
-            var at = $"You consider staying here today, at {price / 12}gr, {price % 12}pf.";
+            var at = TranslationTable.Line("You consider staying here today, at $0gr, $1pf.",
+                (price / 12).ToString(System.Globalization.CultureInfo.InvariantCulture),
+                (price % 12).ToString(System.Globalization.CultureInfo.InvariantCulture));
             var purse = _s.Party.Purse;
             if (cost > 0 && purse < Money.FromPfennigs(cost))
             {
-                text = at + "  But, you do not have enough money.   For the day you will:";
+                text = at + "  " + TranslationTable.Line("But, you do not have enough money.")
+                    + "   " + TranslationTable.Line("For the day you will:");
             }
             else
             {
                 var left = cost > 0 ? purse.Subtract(0, 0, cost) : purse.Add(0, 0, -cost);
-                text = at + (cost > 0 ? "  That will leave you with " : "  With work that will leave you with ")
-                    + $"{left.Florins}fl, {left.Groschen}gr, {left.Pfennigs}pf.   For the day you will:";
+                var money = $"{left.Florins}fl, {left.Groschen}gr, {left.Pfennigs}pf.";
+                text = at + "  "
+                    + TranslationTable.Line(
+                        cost > 0 ? "That will leave you with $0" : "With work that will leave you with $0", money)
+                    + "   " + TranslationTable.Line("For the day you will:");
             }
         }
         ui.Canvas.CopyFrom(_back, 0x50, 0x12, 0xE6, 0x1C);

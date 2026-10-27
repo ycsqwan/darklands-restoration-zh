@@ -1025,13 +1025,13 @@ pause and talk to the peasant farmers.	暂停脚步，与农夫们交谈。
 pause and talk to the peasants and monks in the fields.	停步与田间的农夫及修士交谈。
 pay the monks to chant prayers for your salvation, thus gaining divine favor.	支付费用，让修士为你诵经祈福，从而赢得神恩。
 pay the tithe.	缴纳什一税。
-pay the toll and enter.	Zahlung des Mauts und Eintreten.
-plead for your lives.	Für euer Leben flehen.
+pay the toll and enter.	缴纳过路费后进入。
+plead for your lives.	求饶保命。
 plead innocence.	申辩无罪。
 plead your virtue to avoid payment.	申辩己身之德，以免缴税。
-politely refuse and go your way in peace.	Höflich ablehnen und in Frieden weiterziehen.
+politely refuse and go your way in peace.	婉言谢绝，安然离去。
 politely request an audience with the League Master about your reward.	礼貌请求与联盟首领会面，商讨你的奖赏。
-pray for a saint to help get you into the dungeon.	Zu einem Heiligen beten, damit er euch in die Kerker hilft.
+pray for a saint to help get you into the dungeon.	祈求圣徒助你进入地牢。
 pray for aid in getting an audience.	祈求获准觐见。
 pray for deliverance.	祈求解脱。
 pray for guidance.	祈求指引。
@@ -8777,3 +8777,53 @@ Great Heroes	伟大英雄
 Famous Heroes	著名英雄
 Storied Heroes	传奇英雄
 Legendary Heroes	史诗英雄
+Game	游戏
+Orders	命令
+Attack	攻击
+Party	队伍
+Save Game	保存进度
+Load Saved Game	读取进度
+Difficulty	难度
+Basic	初级
+Standard	标准
+Expert	专家
+Show Changes	显示变化
+Music	音乐
+Sound FX	音效
+Pause	暂停
+Quit to DOS	退出游戏
+Party Info	队伍信息
+Change Marching Order	更改行军顺序
+Halt	停止
+Travel As Group	结队行进
+Travel Single File	单列行进
+Surrender (All)	全体投降
+Loot Bodies	搜掠尸体
+Cancel Giving Order	取消命令
+Throw	投掷
+Vulnerable	破绽
+Berserk	狂暴
+Parry	招架
+Use Missile	使用飞射
+You consider staying here today, at $0gr, $1pf.	你考虑今日在此住下，需 $0gr、$1pf。
+You live off the land, but the lord may be upset if you are caught. After $0 days the risk is $1	你以野外为生，但若被抓，领主可能不满。$0 天后风险为 $1
+But, you do not have enough money.	但你的钱不够。
+For the day you will:	这一天你将：
+That will leave you with $0	这将给你留下 $0
+With work that will leave you with $0	干活后你将留下 $0
+ust Relax	休息
+egain Strength	恢复体力
+ray for divine favor	祈求神恩
+lchemy work	炼金作业
+arn a little money	挣点小钱
+uard the camp	守营
+rain or study	学习或训练
+pend a day, doing the above	花一天执行上述安排
+Relaxes	歇息
+Regain strength (gain $0)	恢复体力（+$0）
+Pray for divine favor (gain $0)	祈求神恩（+$0）
+Make $0 $1	制作 $0 $1
+Earn $0 pf/day as $1	以 $1 身份每日挣 $0pf
+Maintain camp, food	料理营地与伙食
+Train or Study ($1)	学习或训练（$1）
+Std Attack 	普通攻击
