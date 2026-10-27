@@ -43,11 +43,20 @@ internal static class ScreenDrawing
     public static string Hotkey(char letter) => (char)0x8C + $" {letter}" + (char)0xFF;
 
     /// <summary>
-    /// A menu line that the table translates: the whole line in Chinese, with the hotkey highlight around its
-    /// first character. The original draws the Latin initial in the highlight colour and the rest plain; the
-    /// Chinese line has no Latin initial, so the highlight moves onto the first Chinese character instead.
+    /// A menu line with its hotkey: the Latin key in the highlight colour, then the label drawn after it.
     /// </summary>
-    public static string HotkeyLine(string line) => line.Length == 0 ? line : Hotkey(line[0]) + line[1..];
+    /// <remarks>
+    /// The two halves are drawn as separate calls on purpose. The colour codes in <see cref="Hotkey"/> are
+    /// single bytes, and TextPainter.Encode switches a whole string to UTF-8 as soon as one code point is
+    /// above 0xFF. A translated label is made of such code points, so keeping it in the same string as the
+    /// colour codes turns 0x8C and 0xFF into the characters U+008C and U+00FF: the highlight is lost and two
+    /// stray glyphs are drawn where the colour codes used to be.
+    /// </remarks>
+    public static void HotkeyLine(TextPainter text, Canvas canvas, int x, int y, char letter, string label, byte color)
+    {
+        var after = text.Draw(canvas, x, y, Hotkey(letter), color);
+        text.Draw(canvas, after, y, label, color);
+    }
 
     /// <summary>
     /// The game's framed box: filled with <paramref name="background"/>, a dark outline, a light one a

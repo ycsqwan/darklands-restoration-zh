@@ -182,8 +182,9 @@ public sealed class AlchemyScreen(GameUi ui, PartyPanel panel, IReadOnlyList<For
         _formulaPage = false;
         var canvas = ui.Canvas;
         canvas.CopyFrom(_back, 0x3C, 0, 0x104, 200);
-        ui.Text.Draw(canvas, MenuX, MenuTop, ScreenDrawing.HotkeyLine(TranslationTable.Line("Use this formula")), _bench.Batches.Count != 0 ? MenuColor : MenuGreyed);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 8, ScreenDrawing.HotkeyLine(TranslationTable.Line("Do something else")), MenuColor);
+        ScreenDrawing.HotkeyLine(ui.Text, canvas, MenuX, MenuTop, 'U', TranslationTable.Line("Use this formula"),
+            _bench.Batches.Count != 0 ? MenuColor : MenuGreyed);
+        ScreenDrawing.HotkeyLine(ui.Text, canvas, MenuX, MenuTop + 8, 'D', TranslationTable.Line("Do something else"), MenuColor);
         DrawList();
         DrawSelectedFormula();
     }
@@ -315,10 +316,12 @@ public sealed class AlchemyScreen(GameUi ui, PartyPanel panel, IReadOnlyList<For
             Brewing.BaseChance(b.Count).ToString(), _s.Party.PhilosophersStone.ToString(),
             m[Attribute.Intelligence].ToString(), m[Skill.Alchemy].ToString(),
             f.MysticNumber.ToString(), _bench.Chance(b).ToString()), 0xEA, 0x49, 0x15, HeadingColor);
-        ui.Text.Draw(canvas, MenuX, MenuTop, ScreenDrawing.HotkeyLine(TranslationTable.Line("More batches")), _canAddBatch ? MenuColor : MenuGreyed);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 8, ScreenDrawing.HotkeyLine(TranslationTable.Line("Fewer batches")), MenuColor);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 16, ScreenDrawing.HotkeyLine(TranslationTable.Line("Different formula")), MenuColor);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 24, ScreenDrawing.HotkeyLine(TranslationTable.Line("Satisfied with this")), b.Count != 0 ? MenuColor : MenuGreyed);
+        ScreenDrawing.HotkeyLine(ui.Text, canvas, MenuX, MenuTop, 'M', TranslationTable.Line("More batches"),
+            _canAddBatch ? MenuColor : MenuGreyed);
+        ScreenDrawing.HotkeyLine(ui.Text, canvas, MenuX, MenuTop + 8, 'F', TranslationTable.Line("Fewer batches"), MenuColor);
+        ScreenDrawing.HotkeyLine(ui.Text, canvas, MenuX, MenuTop + 16, 'D', TranslationTable.Line("Different formula"), MenuColor);
+        ScreenDrawing.HotkeyLine(ui.Text, canvas, MenuX, MenuTop + 24, 'S', TranslationTable.Line("Satisfied with this"),
+            b.Count != 0 ? MenuColor : MenuGreyed);
         DrawSelectedFormula();
         canvas.CopyFrom(_back, 0xC3, 0x3C, 0x5A, 0x4C);
         ScreenDrawing.Wrapped(ui, TranslationTable.Line("$0 risk - magic #$1",

@@ -182,8 +182,11 @@ not licensed by it; you need your own copy of the game. Third-party components k
   28 条配方描述（`DARKLAND.ALC` 内的英文）逐条译出。
 - **客栈每日安排菜单**：`Just Relax` / `Regain Strength` 等 10 条活动行与 `You decide to...`、
   `Spend a day, doing the above`、`Leave` 纳入查表；44 种打工职业名补齐译文。
-- **菜单热键前缀适配**：中文菜单行没有拉丁首字母，新增 `ScreenDrawing.HotkeyLine`，
-  把高亮标记套在译文的第一个汉字上，保持原有的「首字母反色」视觉约定。
+- **菜单热键前缀适配**：新增 `ScreenDrawing.HotkeyLine`，保留原有的「按键字母反色」约定：
+  反色的拉丁按键字母照旧画在中文标签前面，两段分开绘制。分开是必须的——热键前缀是单字节颜色码
+  （`0x8C` 切换高亮色、`0xFF` 还原），而 `TextPainter.Encode` 只要遇到一个码位 > 0xFF 的字符
+  就把整串转成 UTF-8，颜色码会被解成 U+008C / U+00FF 两个字符，高亮失效并在原位多画两个字形。
+  新增 `HotkeyTextTests` 三个用例锁住这个不变量。
 - **卡片折行修复**（影响中文卡片文本的折行）：每行吞 1 个字符、中文行退到行内最后一个空格断行、
   行首出现收尾标点。
 - **10px 卡片字体**：卡片正文与选项行改用 Fusion Pixel 10px 等宽（原为 WenQuanYi Bitmap Song 12px）。
