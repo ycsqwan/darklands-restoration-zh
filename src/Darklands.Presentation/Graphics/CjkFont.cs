@@ -11,7 +11,7 @@ public sealed record CjkGlyph(int Advance, int OffsetX, int OffsetY, int Width, 
 /// cannot draw (Chinese, and anything else above Latin-1).
 /// </summary>
 // The canvas is indexed and has no alpha blending, so a glyph pixel is either the text colour or nothing and
-// the coverage is thresholded at half. That is also what keeps a bitmap-derived face (WenQuanYi Bitmap Song,
+// the coverage is thresholded at half. That is also what keeps a bitmap-derived face (Fusion Pixel,
 // whose outlines are already pixel-aligned) crisp instead of grey.
 public sealed unsafe class CjkFont : IDisposable
 {
@@ -34,7 +34,7 @@ public sealed unsafe class CjkFont : IDisposable
             throw new InvalidDataException("not a TrueType font");
         }
         // The em square, not the ascent..descent span, is the grid a bitmap-derived face is aligned to.
-        // WenQuanYi Bitmap Song has unitsPerEm == ascent-descent == 1500, so both give 15 px, but a face whose
+        // Fusion Pixel 10 px has unitsPerEm == ascent-descent == 1000, so both give 10 px, but a face whose
         // ascent-descent differs from its unitsPerEm (Cubic 11) only lines up on the em square.
         _scale = StbTrueType.stbtt_ScaleForMappingEmToPixels(_info, em);
         int ascent, descent, gap;

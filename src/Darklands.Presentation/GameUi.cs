@@ -87,25 +87,25 @@ public sealed class GameUi
     /// Latin-1), or null to keep the original's behaviour. The game ships no such font: one is loaded from the
     /// file named by local/paths.json "chinesefont" or DARKLANDS_CHINESE_FONT, else the font embedded in the assembly.
     /// </summary>
-    // The em square (not the ascent..descent span) is the grid a bitmap-derived face is aligned to: WenQuanYi Bitmap
-    // Song has unitsPerEm == ascent-descent == 1500, so 15 px per em puts its outlines back on whole pixels.
+    // The em square (not the ascent..descent span) is the grid a bitmap-derived face is aligned to: Fusion Pixel
+    // 10 px has unitsPerEm == ascent-descent == 1000, so 10 px per em puts its outlines back on whole pixels.
     public CjkFont? ChineseFont => _chinese ??= CjkFont.LoadEmbedded(
         LocalPaths.Get("chinesefont", "DARKLANDS_CHINESE_FONT"),
         ChineseFontEm,
         ChineseFontLineHeight,
         message => Trace?.Invoke(message));
 
-    /// <summary>The em square in pixels the Chinese font is rasterised at (15: WenQuanYi Bitmap Song's grid).</summary>
-    public static int ChineseFontEm => 15;
+    /// <summary>The em square in pixels the Chinese font is rasterised at (10: Fusion Pixel 10 px's grid).</summary>
+    public static int ChineseFontEm => 10;
 
-    /// <summary>The distance between two baselines of the Chinese text (13 px: 12 px glyphs with room to breathe).</summary>
-    public static int ChineseFontLineHeight => 13;
+    /// <summary>The distance between two baselines of the Chinese text (10 px: the glyphs' own 10 px em).</summary>
+    public static int ChineseFontLineHeight => 10;
 
     private CjkFont? _chinese;
 
     /// <summary>
     /// The font of the 8 px screens' Chinese: the UI text is laid out on 6..8 px rows (the shop's rows are 8 px
-    /// apart), so the card font's 15 px em would overlap. Fusion Pixel 8 px has unitsPerEm 800 with the same
+    /// apart), so the card font's 10 px em would overlap. Fusion Pixel 8 px has unitsPerEm 800 with the same
     /// ascent..descent span, so an 8 px em puts its outlines back on whole pixels, and its glyphs are 8 x 7 px.
     /// </summary>
     // Read on first use: a build without the resource (or without the file named by local/paths.json "uichinesefont")

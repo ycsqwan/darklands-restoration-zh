@@ -118,7 +118,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 | 卡片 run 覆盖率 | **7,729 / 7,729**（按出现次数的静态扫描，非运行时验证） |
 | 表条目 | **8,636 条**（8,564 条译文 + 72 条恒等占位） |
 | 表文件 | `translations_zh.tsv`，8,644 行 / 1,790,217 字节 |
-| 卡片字体 | 文泉驿点阵宋体 **12px**（WenQuanYi Bitmap Song） |
+| 卡片字体 | Fusion Pixel **10px** 等宽（卡片正文、选项行） |
 | 界面字体 | Fusion Pixel **8px** 等宽（商店、祈祷等 UI 行） |
 | 渲染方式 | StbTrueTypeSharp → 320×200 索引画布（二值，无 alpha 混合） |
 | 译文来源 | **人工翻译**（Qwen-MT 已弃用） |
@@ -132,7 +132,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 以下截图来自 v0.9.4 的 win-x64 单文件构建（`--scale` 窗口）。
 
-**卡片正文** —— 文泉驿 12px 点阵宋体。折行、避头标点与 `$变量` 展开都有专门处理；
+**卡片正文** —— Fusion Pixel 10px 等宽。折行、避头标点与 `$变量` 展开都有专门处理；
 底部时钟条的 `Prime` / `Hours` / `Days` 等仍是原版英文（属图片内嵌文字）。
 
 ![卡片正文](docs/images/zh-card-text.png)
@@ -219,9 +219,9 @@ dotnet publish src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release -r wi
   程序集内嵌资源。
 * **卡片文本**在 `TextVariables.Expand` **之前**翻译（`CardScreen.cs:232`），
   因此译文里的 `$PlaceName`、`$Number1` 等占位符仍会被游戏替换。
-* **字形**：`CjkFont` 用 StbTrueTypeSharp 一次性栅格化并按码位缓存。文泉驿点阵宋体是像素网格字体
-  （`unitsPerEm = ascent − descent = 1500`），必须按 **em = 15px** 栅格化，否则覆盖度不再是二值，
-  阈值会吃掉笔画。
+* **字形**：`CjkFont` 用 StbTrueTypeSharp 一次性栅格化并按码位缓存。Fusion Pixel 是像素网格字体
+  （`unitsPerEm = ascent − descent`：10px 面为 1000，8px 面为 800），必须按其原生 em 栅格化
+  （卡片 **10px**、UI **8px**），否则覆盖度不再是二值，阈值会吃掉笔画。
 * **画布**是索引色的、没有 alpha 混合，所以 coverage 在 128 处二值化 —— 中文只能纯色、不能抗锯齿；
   但位图来源的字形因此保持锐利，不发灰。
 
@@ -249,18 +249,13 @@ dotnet publish src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release -r wi
 
 随附的运行时字体有两个：
 
-* `ChineseFont.ttf`（文泉驿点阵宋体 12px，卡片正文）使用
-  **GNU GPL v2 + 字体嵌入例外条款**（GPL-2.0 with font embedding exception）：
-  * **版权**：Copyright (C) 2004-2010 The WenQuanYi Project Board of Trustees and Qianqian Fang，
-    基于 firefly 的点阵字体作品
-  * **完整许可文本与出处**：`src/Darklands.Presentation/Resources/WenQuanYi-LICENSE.txt`
-  * **上游**：https://wenq.org/wqy2/index.cgi?BitmapSong
-  * 该 TTF 由 AmusementClub 从 v1.0.0-RC1 (Hero) 的 PCF 点阵字体转换而来
-* `ChineseUiFont.ttf`（Fusion Pixel 8px 等宽，商店等 UI 行）使用
-  **SIL Open Font License 1.1**：
+* `ChineseFont.ttf`（Fusion Pixel 10px 等宽，卡片正文）与 `ChineseUiFont.ttf`
+  （Fusion Pixel 8px 等宽，商店等 UI 行）使用 **SIL Open Font License 1.1**：
   * **版权**：Copyright (c) 2022, TakWolf (https://takwolf.com)
   * **完整许可文本**：`src/Darklands.Presentation/Resources/FusionPixel-LICENSE-OFL.txt`
   * **上游**：https://github.com/TakWolf/fusion-pixel-font
+  * 字形源自 Ark Pixel（10px）与 Boutique Bitmap 9x9 等位图字体，许可文本一并附于
+    `FusionPixel-LICENSE-OFL.txt`
 
 字体以托管资源形式内嵌于程序集（`Darklands.Presentation.Resources.ChineseFont.ttf` /
 `Darklands.Presentation.Resources.ChineseUiFont.ttf`），但可在运行时通过
