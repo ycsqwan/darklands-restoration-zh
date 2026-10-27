@@ -8827,3 +8827,72 @@ Earn $0 pf/day as $1	以 $1 身份每日挣 $0pf
 Maintain camp, food	料理营地与伙食
 Train or Study ($1)	学习或训练（$1）
 Std Attack 	普通攻击
+Use this formula	使用此配方
+Do something else	做些别的事
+More batches	增加批次
+Fewer batches	减少批次
+Different formula	换个配方
+Satisfied with this	就这样吧
+Ingredients:	所需材料：
+Mystical Number - $0	神秘数字 —— $0
+$0's Formula - making $1 batches.	$0的配方 —— 制作 $1 批。
+$0 + $1ps + $2int + $3alch - $4mn = $5% success.	$0 + $1 哲石 + $2 智力 + $3 炼金 - $4 神秘 = $5% 成功率。
+$0 risk - magic #$1	$0 风险 —— 魔法 #$1
+$0 $1 ($2)	$0 $1（$2）
+have $0	拥有 $0
+$0 short!	缺 $0！
+Just Relax	休息一下
+Regain Strength	恢复体力
+Pray for divine favor	祈祷神恩
+Alchemy work	炼金工作
+Earn a little money	赚点小钱
+Guard the camp	守卫营地
+Train or study	训练或学习
+Spend a day, doing the above	花一天时间，做上述事情
+Leave	离开
+BA large cloud whose smell makes people sick; agility and fighting skill decline	一大团臭味令人作呕的云雾；敏捷与战斗技能下降
+A large cloud whose smell makes people sick; agility and fighting skill decline	一大团臭味令人作呕的云雾；敏捷与战斗技能下降
+A vial of blinding powder; skills of the person hit are greatly reduced.	一瓶致盲粉末；被击中者的技能大幅下降。
+A dense cloud of black smoke; conceals, upping stealth and lowering perception.	一团浓密的黑烟；遮蔽视线，提升隐匿并降低感知。
+A cloud of itching powder; reduces skills in proportion to the targets armor.	一团痒粉；按目标护甲比例降低其技能。
+Oily, acidic liquid that can eat through metal -- even armor. Dangerous to make	油腻的酸性液体，能腐蚀金属——甚至护甲。制作危险
+A poisonous cloud of deadly vapors which are unaffected by armor.	一团有毒的致命雾气，护甲无法抵挡。
+A blinding explosion of light; it stuns anyone standing near.	一阵致盲的强光爆闪；震晕附近的任何人。
+A sealed vial that, upon impact, explodes with great force.	一只密封的小瓶，撞击时会猛烈爆炸。
+A sticky, burning substance that clings to flesh and flows through armor.	一种黏稠的燃烧物质，会附着在血肉上并渗入护甲。
+A pool of sticky sludge; it slows anyone who crosses it.	一滩黏稠的污泥；会减慢任何跨过它的人。
+An oil applied to non-impact weapons that increases the damage done.	涂在非打击类武器上，以增加其伤害。
+An oil applied to blades and poles that enhances combat effectiveness.	涂在刀剑与长杆武器上，增强战斗效能。
+An oil applied to weapons that improves their quality.	涂在武器上，提升其品质。
+An oil applied to missile weapons that increases accuracy.	涂在投掷与射击武器上，提高命中精度。
+An oil applied to armor that increases its thickness and quality.	涂在护甲上，增加其厚度与品质。
+A solution that purifies, and sometimes appears to make more gold.	一种净化溶液，有时似乎能变出更多黄金。
+A potion to be drunk; it increases the user's perception.	一种内服药剂；提升使用者的感知。
+A healing potion that restores lost endurance.	一种治疗药剂，恢复失去的耐力。
+A potion that can increase strength above the normal maximum.	一种药剂，可把力量提升到正常上限之上。
+A draught that can increase agility above the normal maximum.	一种饮剂，可把敏捷提升到正常上限之上。
+A healing potion that restores endurance and strength.	一种治疗药剂，恢复耐力与力量。
+A draught that greatly increases the user's resistance to fire magic.	一种饮剂，大幅提升使用者对火系魔法的抗性。
+potions	药剂
+potion	一瓶药剂
+Beggar	乞丐
+Fortune Teller	算命先生
+Messenger	信使
+Preaching Friar	布道修士
+Bodyguard	护卫
+Clerk	办事员
+Scribe	抄写员
+Servant	仆人
+Mendicant Friar	托钵修士
+Healer	治疗师
+Street Bravo	街头浪子
+Militiaman	民兵
+Mercenary	雇佣兵
+Guard Sergeant	卫队队长
+Taskmaster	工头
+Craftsman	工匠
+Canon's Aide	教士助手
+Troubador	游吟诗人
+Entertainer	艺人
+Courtier	廷臣
+Day Laborer	日结短工

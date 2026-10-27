@@ -128,17 +128,19 @@ public sealed class AlchemyScreen(GameUi ui, PartyPanel panel, IReadOnlyList<For
         {
             ScreenDrawing.DrawBackground(ui, panel, state.Party, "alcscrn0");
             ui.Text.Draw(ui.Canvas, 100, 9, f.Name, HeadingColor);
-            ui.Text.Draw(ui.Canvas, 100, 0x12, $"Mystical Number - {f.MysticNumber}", HeadingColor);
+            ui.Text.Draw(ui.Canvas, 100, 0x12, TranslationTable.Line("Mystical Number - $0", f.MysticNumber.ToString()), HeadingColor);
             ScreenDrawing.Wrapped(ui, f.Name, 0x5F, 0x49, 0x3A, MenuColor);
             ScreenDrawing.Wrapped(ui, f.Description, 0x5F, 0x49, 0x52, MenuColor);
-            ui.Text.Draw(ui.Canvas, 0xCB, 0x39, "Ingredients:", MenuColor);
+            ui.Text.Draw(ui.Canvas, 0xCB, 0x39, TranslationTable.Line("Ingredients:"), MenuColor);
             var y = 0x41;
             foreach (var ing in f.Slots)
             {
                 if (ing.Count != 0)
                 {
                     var have = stock[ing.Item & 0xFF];
-                    ui.Text.Draw(ui.Canvas, 0xCD, y, $"{ing.Count} {state.Item(ing.Item).Name} ({have})", have < ing.Count ? MenuGreyed : MenuColor);
+                    var text = TranslationTable.Line("$0 $1 ($2)", ing.Count.ToString(),
+                        TranslationTable.Name(state.Item(ing.Item).Name), have.ToString());
+                    ui.Text.Draw(ui.Canvas, 0xCD, y, text, have < ing.Count ? MenuGreyed : MenuColor);
                 }
                 y += 8;
             }
@@ -180,8 +182,8 @@ public sealed class AlchemyScreen(GameUi ui, PartyPanel panel, IReadOnlyList<For
         _formulaPage = false;
         var canvas = ui.Canvas;
         canvas.CopyFrom(_back, 0x3C, 0, 0x104, 200);
-        ui.Text.Draw(canvas, MenuX, MenuTop, ScreenDrawing.Hotkey('U') + "se this formula", _bench.Batches.Count != 0 ? MenuColor : MenuGreyed);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 8, ScreenDrawing.Hotkey('D') + "o something else", MenuColor);
+        ui.Text.Draw(canvas, MenuX, MenuTop, ScreenDrawing.HotkeyLine(TranslationTable.Line("Use this formula")), _bench.Batches.Count != 0 ? MenuColor : MenuGreyed);
+        ui.Text.Draw(canvas, MenuX, MenuTop + 8, ScreenDrawing.HotkeyLine(TranslationTable.Line("Do something else")), MenuColor);
         DrawList();
         DrawSelectedFormula();
     }
@@ -307,24 +309,30 @@ public sealed class AlchemyScreen(GameUi ui, PartyPanel panel, IReadOnlyList<For
         var m = _s.Party.Slot(_bench.Alchemist);
         canvas.CopyFrom(_back, 0x3C, 0, 0x104, 200);
         _canAddBatch = _bench.HasIngredients(f);
-        ScreenDrawing.Wrapped(ui, $"{m.ShortName}'s Formula - making {b.Count} batches.", 0xEA, 0x49, 0x0D, HeadingColor);
-        ScreenDrawing.Wrapped(ui, $"{Brewing.BaseChance(b.Count)} + {_s.Party.PhilosophersStone}ps + {m[Attribute.Intelligence]}int + " +
-            $"{m[Skill.Alchemy]}alch - {f.MysticNumber}mn = {_bench.Chance(b)}% success.", 0xEA, 0x49, 0x15, HeadingColor);
-        ui.Text.Draw(canvas, MenuX, MenuTop, ScreenDrawing.Hotkey('M') + "ore batches", _canAddBatch ? MenuColor : MenuGreyed);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 8, ScreenDrawing.Hotkey('F') + "ewer batches", MenuColor);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 16, ScreenDrawing.Hotkey('D') + "ifferent formula", MenuColor);
-        ui.Text.Draw(canvas, MenuX, MenuTop + 24, ScreenDrawing.Hotkey('S') + "atisfied with this", b.Count != 0 ? MenuColor : MenuGreyed);
+        ScreenDrawing.Wrapped(ui, TranslationTable.Line("$0's Formula - making $1 batches.",
+            TranslationTable.Name(m.ShortName), b.Count.ToString()), 0xEA, 0x49, 0x0D, HeadingColor);
+        ScreenDrawing.Wrapped(ui, TranslationTable.Line("$0 + $1ps + $2int + $3alch - $4mn = $5% success.",
+            Brewing.BaseChance(b.Count).ToString(), _s.Party.PhilosophersStone.ToString(),
+            m[Attribute.Intelligence].ToString(), m[Skill.Alchemy].ToString(),
+            f.MysticNumber.ToString(), _bench.Chance(b).ToString()), 0xEA, 0x49, 0x15, HeadingColor);
+        ui.Text.Draw(canvas, MenuX, MenuTop, ScreenDrawing.HotkeyLine(TranslationTable.Line("More batches")), _canAddBatch ? MenuColor : MenuGreyed);
+        ui.Text.Draw(canvas, MenuX, MenuTop + 8, ScreenDrawing.HotkeyLine(TranslationTable.Line("Fewer batches")), MenuColor);
+        ui.Text.Draw(canvas, MenuX, MenuTop + 16, ScreenDrawing.HotkeyLine(TranslationTable.Line("Different formula")), MenuColor);
+        ui.Text.Draw(canvas, MenuX, MenuTop + 24, ScreenDrawing.HotkeyLine(TranslationTable.Line("Satisfied with this")), b.Count != 0 ? MenuColor : MenuGreyed);
         DrawSelectedFormula();
         canvas.CopyFrom(_back, 0xC3, 0x3C, 0x5A, 0x4C);
-        ScreenDrawing.Wrapped(ui, $"{f.RiskName} risk - magic #{f.MysticNumber}", 0x55, 0xC6, 0x3F, MenuColor);
-        ui.Text.Draw(canvas, 0xC6, 0x56, "Ingredients:", MenuColor);
+        ScreenDrawing.Wrapped(ui, TranslationTable.Line("$0 risk - magic #$1",
+            f.RiskName, f.MysticNumber.ToString()), 0x55, 0xC6, 0x3F, MenuColor);
+        ui.Text.Draw(canvas, 0xC6, 0x56, TranslationTable.Line("Ingredients:"), MenuColor);
         var y = 0x5E;
         foreach (var ing in f.Slots)
         {
             if (ing.Count != 0)
             {
                 var have = _bench.Stock(ing.Item);
-                ui.Text.Draw(canvas, 0xC8, y, $"{ing.Count} {_s.Item(ing.Item).Name} ({have})", have >= ing.Count ? MenuColor : MenuGreyed);
+                var text = TranslationTable.Line("$0 $1 ($2)", ing.Count.ToString(),
+                    TranslationTable.Name(_s.Item(ing.Item).Name), have.ToString());
+                ui.Text.Draw(canvas, 0xC8, y, text, have >= ing.Count ? MenuColor : MenuGreyed);
             }
             y += 8;
         }

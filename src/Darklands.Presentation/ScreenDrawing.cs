@@ -43,6 +43,13 @@ internal static class ScreenDrawing
     public static string Hotkey(char letter) => (char)0x8C + $" {letter}" + (char)0xFF;
 
     /// <summary>
+    /// A menu line that the table translates: the whole line in Chinese, with the hotkey highlight around its
+    /// first character. The original draws the Latin initial in the highlight colour and the rest plain; the
+    /// Chinese line has no Latin initial, so the highlight moves onto the first Chinese character instead.
+    /// </summary>
+    public static string HotkeyLine(string line) => line.Length == 0 ? line : Hotkey(line[0]) + line[1..];
+
+    /// <summary>
     /// The game's framed box: filled with <paramref name="background"/>, a dark outline, a light one a
     /// pixel inside it, and the four corner pieces of COMMONSP.IMG over the corners.
     /// </summary>

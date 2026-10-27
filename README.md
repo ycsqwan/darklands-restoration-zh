@@ -116,13 +116,13 @@ not licensed by it; you need your own copy of the game. Third-party components k
 | 项目 | 状态 |
 | --- | --- |
 | 卡片 run 覆盖率 | **7,729 / 7,729**（按出现次数的静态扫描，非运行时验证） |
-| 表条目 | **8,821 条**（8,739 条译文 + 72 条恒等占位 + 10 条单字母/符号条目） |
-| 表文件 | `translations_zh.tsv`，8,829 行 / 1,794,216 字节 |
+| 表条目 | **8,897 条**（8,815 条译文 + 72 条恒等占位 + 10 条单字母/符号条目） |
+| 表文件 | `translations_zh.tsv`，8,897 行 / 1,798,430 字节 |
 | 卡片字体 | Fusion Pixel **10px** 等宽（卡片正文、选项行） |
 | 界面字体 | Fusion Pixel **8px** 等宽（商店、祈祷等 UI 行） |
 | 渲染方式 | StbTrueTypeSharp → 320×200 索引画布（二值，无 alpha 混合） |
 | 译文来源 | **人工翻译**（Qwen-MT 已弃用） |
-| 覆盖的 UI | 卡片窗口、侧窗、屏幕页、队伍面板、顶部菜单栏、战斗命令菜单、客栈休息页、商店 / 交易 / 拾取、祈祷 |
+| 覆盖的 UI | 卡片窗口、侧窗、屏幕页、队伍面板、顶部菜单栏、战斗命令菜单、客栈休息页、炼金术界面、商店 / 交易 / 拾取、祈祷 |
 | 未验证 | 选项列表、谜题旋钮、代词替换 |
 | 未翻译 | 图片内嵌文字（需 HD 包）、部分代码内硬编码字符串 |
 
@@ -177,6 +177,13 @@ not licensed by it; you need your own copy of the game. Third-party components k
   （`Relaxes` / `Regain strength (gain $0)` 等）同样改为模板。
 - **4 条德语残留修正**：表里 4 条卡片选项的译文是德语（`pay the toll and enter.` 等），
   应是某次德语实验的残留，已逐条改回中文。
+- **炼金术界面**（`AlchemyScreen.cs`）：选项行、`Ingredients:`、神秘数字、`… 的配方 —— 制作 N 批`、
+  成功率算式、风险行、材料行全部纳入查表。带数字的行原本是插值字符串，已改为模板 + 参数；
+  28 条配方描述（`DARKLAND.ALC` 内的英文）逐条译出。
+- **客栈每日安排菜单**：`Just Relax` / `Regain Strength` 等 10 条活动行与 `You decide to...`、
+  `Spend a day, doing the above`、`Leave` 纳入查表；44 种打工职业名补齐译文。
+- **菜单热键前缀适配**：中文菜单行没有拉丁首字母，新增 `ScreenDrawing.HotkeyLine`，
+  把高亮标记套在译文的第一个汉字上，保持原有的「首字母反色」视觉约定。
 - **卡片折行修复**（影响中文卡片文本的折行）：每行吞 1 个字符、中文行退到行内最后一个空格断行、
   行首出现收尾标点。
 - **10px 卡片字体**：卡片正文与选项行改用 Fusion Pixel 10px 等宽（原为 WenQuanYi Bitmap Song 12px）。

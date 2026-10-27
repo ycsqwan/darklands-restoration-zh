@@ -434,8 +434,7 @@ public sealed class CampScreen(GameUi ui, PartyPanel panel, IReadOnlyList<Formul
         ];
         for (var k = 0; k < MenuLines.Length; k++)
         {
-            var parts = MenuLines[k].Split('|');
-            ui.Text.Draw(ui.Canvas, MenuX, MenuTop + k * 9, ScreenDrawing.Hotkey(parts[0][0]) + parts[1], usable[k] ? lit : dim);
+            ui.Text.Draw(ui.Canvas, MenuX, MenuTop + k * 9, ScreenDrawing.HotkeyLine(TranslationTable.Line(MenuLines[k].Replace("|", ""))), usable[k] ? lit : dim);
         }
     }
 
@@ -456,7 +455,7 @@ public sealed class CampScreen(GameUi ui, PartyPanel panel, IReadOnlyList<Formul
             var y = i * 0x12 + 0x30;
             ui.Text.Draw(ui.Canvas, 0x49, y, m.ShortName + "...", color);
             var text = TranslationTable.Line(ActivityTexts[(int)_stay.Activity[i]],
-                _stay.Gain[i].ToString(System.Globalization.CultureInfo.InvariantCulture), _stay.Detail[i]);
+                _stay.Gain[i].ToString(System.Globalization.CultureInfo.InvariantCulture), TranslationTable.Name(_stay.Detail[i]));
             ScreenDrawing.Wrapped(ui, text, 0x50, 0x78, y, color, leading: 0);
         }
     }
@@ -499,9 +498,9 @@ public sealed class CampScreen(GameUi ui, PartyPanel panel, IReadOnlyList<Formul
         }
         ui.Canvas.CopyFrom(_back, 0x50, 0x12, 0xE6, 0x1C);
         ScreenDrawing.Wrapped(ui, text, 0xDC, 0x50, 0x12, TextColor);
-        ui.Text.Draw(ui.Canvas, 0x4B, 0xA4, "You decide to...", TextColor);
-        ui.Text.Draw(ui.Canvas, 0x5F, 0xAC, ScreenDrawing.Hotkey('S') + "pend a day, doing the above", PartyColor);
-        ui.Text.Draw(ui.Canvas, 0x5F, 0xB5, ScreenDrawing.Hotkey('L') + "eave", PartyColor);
+        ui.Text.Draw(ui.Canvas, 0x4B, 0xA4, TranslationTable.Line("You decide to..."), TextColor);
+        ui.Text.Draw(ui.Canvas, 0x5F, 0xAC, ScreenDrawing.HotkeyLine(TranslationTable.Line("Spend a day, doing the above")), PartyColor);
+        ui.Text.Draw(ui.Canvas, 0x5F, 0xB5, ScreenDrawing.HotkeyLine(TranslationTable.Line("Leave")), PartyColor);
     }
 
     // orig: R036+0x1D24 and R036+0x1C3C (draft, bytes match)
