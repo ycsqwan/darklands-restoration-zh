@@ -132,12 +132,12 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 以下截图来自 v0.9.4 的 win-x64 单文件构建（`--scale` 窗口）。
 
-**卡片正文** —— Fusion Pixel 10px 等宽。折行、避头标点与 `$变量` 展开都有专门处理；
-底部时钟条的 `Prime` / `Hours` / `Days` 等仍是原版英文（属图片内嵌文字）。
+**卡片正文** —— 夜色中的等待卡：正文为 Fusion Pixel 10px 等宽，折行、避头标点与 `$变量` 展开都有专门处理；
+底部时钟条的 `Prime` / `Hours` / `Days` / `Months` 与数字仍是原版英文（属图片内嵌文字）。
 
 ![卡片正文](docs/images/zh-card-text.png)
 
-**城镇选项** —— 卡片窗口内的选项列表，中文与原版混排的 `……` 前缀。
+**城镇选项** —— 卡片窗口内的城镇地点菜单，中文与原版混排的 `……` 前缀；`Xanten`、`Domplatz`、`Markt`、`Gasthaus` 等地名保留原版。
 
 ![城镇选项](docs/images/zh-town-options.png)
 
@@ -153,7 +153,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 
 ![祈祷界面](docs/images/zh-saint-prayer.png)
 
-**队伍面板** —— 队员名与所属圣徒名（竖版，原始比例较小）。
+**队伍面板** —— 队员名与地点名（竖版裁切，原始比例较小）。
 
 ![队伍面板](docs/images/zh-party.png)
 
