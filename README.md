@@ -76,6 +76,9 @@ want:
 Everything else is in `docs/SETTINGS.md`, which also lists the command-line forms (`--fullscreen`,
 `--scale 2`, `--no-intro` and so on).
 
+**新玩家入门**：`docs/GAME_GUIDE_ZH.md` 是一份中文游戏指南，含属性、技能、136 位圣徒、
+18 件圣物、330 处地点的对照表（数据逐条提取自游戏本体）。
+
 ## Status: version 0.9.4
 
 The whole game plays: character creation, cities and their streets, inns and shops, guilds, banks and
