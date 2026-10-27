@@ -104,7 +104,7 @@ not licensed by it; you need your own copy of the game. Third-party components k
 本 fork 在 Restoration Project 之上加入**简体中文**。上游没有国际化支持，也没有 mod / 插件接口，
 所以 CJK 渲染路径是**源码树的一部分**，而不是外挂的插件。
 
-> ⚠️ **实验性构建（experimental）**：卡片文本的可打印 run 已逐条进入翻译表（7,729 / 7,729，按静态扫描统计），
+> ⚠️ **实验性构建（experimental）**：卡片文本的可打印 run 已逐条进入翻译表（7,729 / 7,729，按静态扫描统计；译文里另有 86 条界面模板与变量条目），
 > 译文为**人工翻译**（机器翻译已弃用）。但卡片换行、选项列表、谜题旋钮、`$he/$his` 代词替换等**尚未全面实测**，
 > 覆盖率数字也只反映静态文本，不代表运行时表现。
 > 欢迎试用与反馈，但请勿视作成品。详见[已知问题](#已知问题)。
@@ -116,8 +116,8 @@ not licensed by it; you need your own copy of the game. Third-party components k
 | 项目 | 状态 |
 | --- | --- |
 | 卡片 run 覆盖率 | **7,729 / 7,729**（按出现次数的静态扫描，非运行时验证） |
-| 表条目 | **8,636 条**（8,564 条译文 + 72 条恒等占位） |
-| 表文件 | `translations_zh.tsv`，8,644 行 / 1,790,217 字节 |
+| 表条目 | **8,771 条**（8,685 条译文 + 86 条界面模板/变量条目 + 66 条恒等占位，另有 4 行未计） |
+| 表文件 | `translations_zh.tsv`，8,780 行 / 1,792,675 字节 |
 | 卡片字体 | Fusion Pixel **10px** 等宽（卡片正文、选项行） |
 | 界面字体 | Fusion Pixel **8px** 等宽（商店、祈祷等 UI 行） |
 | 渲染方式 | StbTrueTypeSharp → 320×200 索引画布（二值，无 alpha 混合） |
@@ -171,7 +171,9 @@ not licensed by it; you need your own copy of the game. Third-party components k
 - **祈祷界面**：状态、菜单、圣日、圣徒描述均走查表。
 - **卡片折行修复**（影响中文卡片文本的折行）：每行吞 1 个字符、中文行退到行内最后一个空格断行、
   行首出现收尾标点。
-- **8px 界面字体**：商店等 UI 行改用 Fusion Pixel 8px 等宽；卡片正文的 12px 字体保持不变。
+- **10px 卡片字体**：卡片正文与选项行改用 Fusion Pixel 10px 等宽（原为 WenQuanYi Bitmap Song 12px）。
+  WQY 的最小面是 12px，字腔偏大、会把选项行挤出卡片文本框；Fusion Pixel 有 10px 面，
+  `unitsPerEm == ascent − descent == 1000`，em=10 正好落在整数像素网格上。随附的 WQY 许可文件已删除。
 
 ---
 
@@ -222,6 +224,8 @@ dotnet publish src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release -r wi
 * **字形**：`CjkFont` 用 StbTrueTypeSharp 一次性栅格化并按码位缓存。Fusion Pixel 是像素网格字体
   （`unitsPerEm = ascent − descent`：10px 面为 1000，8px 面为 800），必须按其原生 em 栅格化
   （卡片 **10px**、UI **8px**），否则覆盖度不再是二值，阈值会吃掉笔画。
+  `GameUi.cs` 的 `ChineseFontEm` / `ChineseFontLineHeight` = 10 / 10，
+  `UiChineseFontEm` / `UiChineseFontLineHeight` = 8 / 8。
 * **画布**是索引色的、没有 alpha 混合，所以 coverage 在 128 处二值化 —— 中文只能纯色、不能抗锯齿；
   但位图来源的字形因此保持锐利，不发灰。
 
@@ -235,8 +239,9 @@ dotnet publish src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release -r wi
    本 fork 未实现。
 3. **部分代码内硬编码字符串未翻译**。商店、交易、拾取、祈祷等界面已改为模板 + 查表，
    其余硬编码字符串（开发控制台、启动器等）仍为英文。
-4. **卡片容量**：可用高度 194px，中文容量约 18 列 × 13 行 = 234 字/屏。
-   3,756 张卡中仅 15 张（0.4%）超 194px，且原版自己就溢出。
+4. **卡片容量**：卡片文本框可用高度 194px（243px 框高减去边框与内边距）。10px 行高下
+   中文容量约 19 列 × 19 行 = 361 字/屏，比 12px 面（约 15 行）多出四成以上。
+   换 10px 面后已确认卡片不再挤出选项行，但**仍未逐张复测全部 3,756 张卡**。
 
 ---
 
@@ -247,7 +252,7 @@ dotnet publish src/Darklands.Host.Sdl/Darklands.Host.Sdl.csproj -c Release -r wi
 （`CjkFont.cs`、`TranslationTable.cs`、`TextDecoder.cs`、`TextPainter.cs` 等）与译文表
 `translations_zh.tsv` 同属该许可范围。
 
-随附的运行时字体有两个：
+随附的运行时字体有两个，两者都内嵌于程序集、也都可运行时替换：
 
 * `ChineseFont.ttf`（Fusion Pixel 10px 等宽，卡片正文）与 `ChineseUiFont.ttf`
   （Fusion Pixel 8px 等宽，商店等 UI 行）使用 **SIL Open Font License 1.1**：
